@@ -19,4 +19,4 @@ Kompilere med:
 
 
 Denne nås på URL-en:  
-https://nvdb-vegdata.github.io/nvdb-vegrefendring/
+https://nvdb-vegdata.github.io/nvdb-vegrefendring-v4/
