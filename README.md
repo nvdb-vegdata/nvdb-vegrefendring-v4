@@ -10,5 +10,13 @@ Kompilere med:
 og åpne index.html i nettleser.
 
 
+
+
+# Utvikle lokalt
+Kompilere med:
+```npx tsc --watch```
+
+
+
 Denne nås på URL-en:  
 https://nvdb-vegdata.github.io/nvdb-vegrefendring/
