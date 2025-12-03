@@ -32,6 +32,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tids
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -65,6 +66,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid: number, positio
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -91,6 +93,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse: Stri
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -117,6 +120,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid: number, pos
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -144,6 +148,7 @@ export const fetchPositionByNordOst = async (nord: number, ost: number, tidspunk
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -173,6 +178,7 @@ export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId : num
 
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }

@@ -23,6 +23,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
     console.log(`Fetching historic road object (typeid=532) from: ${url}?${params}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -49,6 +50,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
     console.log(`Fetching current road position (vegsystemreferanse) from: ${url}?${params}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -68,6 +70,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
     console.log(`Fetching current road position (vegsystemreferanse) from: ${url}?${params}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -87,6 +90,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
     console.log(`Fetching current road position (vegsystemreferanse) from: ${url}?${params}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -107,6 +111,7 @@ export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     console.log(`Fetching  position by nord and ost: ${url}?${params}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
@@ -130,6 +135,7 @@ export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId, posi
     console.log(`Fetching historic road object (typeid=532) from: ${url}?${params} for veglenkesekvensId=${veglenksekvensId} at posisjon=${posisjon}`);
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
+        mode: 'cors',
         headers: {
             "Accept": "application/json"
         }
