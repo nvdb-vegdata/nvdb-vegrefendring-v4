@@ -3,7 +3,7 @@ export function setNvdbBaseUrl(url) {
     baseUrl = url;
 }
 export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
-    const url = baseUrl + "/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
     const params = new URLSearchParams({
         segmentering: "true",
         inkludergeometri: "ingen",
@@ -43,7 +43,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
     return await response.json();
 };
 export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
     const params = new URLSearchParams({
         veglenkesekvens: `${position}@${veglenkesekvensid}`
     });
@@ -62,7 +62,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
     return await response.json();
 };
 export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tidspunkt) => {
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
     const params = new URLSearchParams({
         vegsystemreferanse: `${vegsystemreferanse}`,
         ...(tidspunkt ? { tidspunkt: tidspunkt.toISOString().slice(0, 10) } : {})
@@ -82,7 +82,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
     return await response.json();
 };
 export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, tidspunkt) => {
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
     const params = new URLSearchParams({
         veglenkesekvens: `${posisjon}@${veglenksekvensid}`,
         ...(tidspunkt ? { tidspunkt: tidspunkt.toISOString().slice(0, 10) } : {})
@@ -102,7 +102,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
     return await response.json();
 };
 export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
-    const url = baseUrl + "/posisjon";
+    const url = baseUrl + "/vegnett/api/v4/posisjon";
     const params = new URLSearchParams({
         nord: `${nord}`,
         ost: `${ost}`,
@@ -123,7 +123,7 @@ export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     return await response.json();
 };
 export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId, posisjon, tidspunkt) => {
-    const url = baseUrl + "/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
     const params = new URLSearchParams({
         segmentering: "true",
         inkluder: "egenskaper,lokasjon,metadata",

@@ -8,7 +8,7 @@ export function setNvdbBaseUrl(url: string) {
 }
 
 export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<HistoricVegobjektResponse> => {
-    const url = baseUrl + "/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
 
     const params = new URLSearchParams({
         segmentering: "true",
@@ -56,7 +56,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tids
 
 export const fetchVegsystemReferanse = async (veglenkesekvensid: number, position: number) => {
 
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
 
     const params = new URLSearchParams({
         veglenkesekvens: `${position}@${veglenkesekvensid}`
@@ -82,7 +82,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid: number, positio
 
 export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse: String, tidspunkt?: Date) : Promise<Posisjon> => {
 
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
 
     const params = new URLSearchParams({
         vegsystemreferanse: `${vegsystemreferanse}`,
@@ -109,7 +109,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse: Stri
 
 export const fetchPositionByLenkeposisjon = async (veglenksekvensid: number, posisjon: number, tidspunkt?: Date) : Promise<Posisjon> => {
 
-    const url = baseUrl + "/veg";
+    const url = baseUrl + "/vegnett/api/v4/veg";
 
     const params = new URLSearchParams({
         veglenkesekvens: `${posisjon}@${veglenksekvensid}`,
@@ -135,7 +135,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid: number, pos
 
 export const fetchPositionByNordOst = async (nord: number, ost: number, tidspunkt?: Date) : Promise<Posisjon[]> => {
 
-    const url = baseUrl + "/posisjon";
+    const url = baseUrl + "/vegnett/api/v4/posisjon";
 
     const params = new URLSearchParams({
             nord: `${nord}`,
@@ -163,7 +163,7 @@ export const fetchPositionByNordOst = async (nord: number, ost: number, tidspunk
 
 
 export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId : number, posisjon: number, tidspunkt?: Date) : Promise<HistoricVegobjektResponse> => {
-    const url = baseUrl + "/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
 
     const params = new URLSearchParams({
         segmentering: "true",
