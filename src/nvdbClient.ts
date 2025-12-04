@@ -11,7 +11,6 @@ export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tids
     const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
 
     const params = new URLSearchParams({
-        segmentering: "true",
         inkludergeometri: "ingen",
         inkluder: "egenskaper,lokasjon,metadata",
         ...(tidspunkt
