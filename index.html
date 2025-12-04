@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegreferanse Historikk</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
-
 </head>
 
 
@@ -300,20 +297,15 @@
     </main>
 </div>
 
-<script type="module" src="js/hentvegref.js"></script>
-<script type="module" src="js/app.js"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
+<script type="module" src="dist/app.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var map = L.map('map').setView([60.472, 8.4689], 5); // Centered on Norway
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-    });
-</script>
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var map = L.map('map').setView([60.472, 8.4689], 5); // Centered on Norway
+    //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //         attribution: '© OpenStreetMap contributors'
+    //     }).addTo(map);
+    // });
 
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         const toggleBtn = document.getElementById('toggleSearchSections');
         const searchSections = document.querySelector('.search-sections');
