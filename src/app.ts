@@ -148,6 +148,10 @@ function showLoading() {
 
 async function displayResults(result: VegrefAndVegsystemreferanse[]) {
     const resultsDiv = (document.getElementById('results') as HTMLDivElement);
+    const vis532 : boolean = (document.getElementById('vis532_switch') as HTMLInputElement).checked;
+
+
+
     if (result.length == 0) {
         if (resultsDiv) resultsDiv.innerHTML = '<p>Ingen resultater funnet.</p>';
     } else {
@@ -156,10 +160,13 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
             '<thead>' +
             '<tr>' +
             '<th>Vegreferanse</th>' +
-            '<th>Vegreferanse <br>(Objekttype 532)</th>' +
-            '<th>Veglenkeposisjon <br>( 532 )</th>' +
-            '<th>Fa dato <br>( 532 )</th>' +
-            '<th>Til dato <br>( 532 )</th>' +
+            (vis532 === true
+                ? '<th>Vegreferanse <br>(Objekttype 532)</th>' +
+                  '<th>Veglenkeposisjon <br>( 532 )</th>'
+                : '')
+            +
+            '<th>Fa dato</th>' +
+            '<th>Til dato</th>' +
             '<th>Veglenkeposisjon</th>' +
             '<th>Koordinat</th>' +
             '<th>Dagens vegsystemreferanse</th>' +
@@ -187,8 +194,10 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 }
                 html += `<tr class="${rowClass}">
             <td>${feature.beregnetVegreferanse}</td>
-            <td>${feature.vegreferanse}</td>
-            <td>${feature.veglenkeposisjon}</td>
+            ${vis532 === true
+                ? `<td>${feature.vegreferanse}</td>
+                   <td>${feature.veglenkeposisjon}</td>`
+                : ''}
             <td>${feature.fraDato}</td>
             <td>${feature.tilDato}</td>
             <td>${UtilClass.formatNumber(feature.relativPosisjon,6)}@${feature.veglenkeid}</td>
