@@ -1,4 +1,4 @@
-import type {HistoricVegobjekt} from "./nvdbTypes.ts";
+import type {HistoricVegobjekt, Posisjon, Vegsystemreferanse} from "./nvdbTypes.ts";
 import {Vegkategori, Vegstatus} from "./vegreferanse.js";
 
 export class UtilClass {
@@ -100,6 +100,16 @@ export class UtilClass {
         }
     }
 
+    /**
+     * Beregner meterverdien basert på en gitt relativ posisjon i et `Vegobjekt`.
+     * Finner start- og sluttmeter-egenskapene (id 4571 og 4572) og bruker første stedfesting.
+     * Returnerer 0 hvis nødvendig data mangler, ellers returneres den beregnede meterverdien.
+     *
+     * @param vegobjekt Vegobjektet det skal beregnes meterverdi for.
+     * @param relativePosition Den relative posisjonen som skal konverteres til meterverdi.
+     * @param ignorerRetning Valgfritt flagg for å ignorere retningen ved beregning (standard er false).
+     * @returns Den beregnede meterverdien.
+     */
     static finnRelativMeter(vegobjekt: HistoricVegobjekt, relativePosition: number, ignorerRetning: boolean = false) {
         const fra = vegobjekt.egenskaper.find(e => e.id === 4571);
         const til = vegobjekt.egenskaper.find(e => e.id === 4572);
@@ -156,11 +166,23 @@ export class UtilClass {
         return customPosition;
     }
 
+    /**
+     * Pads a number with leading zeros to reach a specified maximum length.
+     * @param number
+     * @param maxlength
+     */
     static padNumber(number: number, maxlength: number) {
         return number.toString().padStart(maxlength, '0');
     }
 
 
+    /**
+     * Formats a number to a string with a specified number of decimal places.
+     * Trailing zeros and decimal points are removed as needed.
+     * If the number is zero, returns "0.0".
+     * @param num
+     * @param decimals
+     */
     static formatNumber(num: number, decimals: number = 8) {
         if (num === 0) return "0.0";
 
@@ -173,5 +195,19 @@ export class UtilClass {
         if (!str.includes(".")) str += ".0";
 
         return str;
+    }
+
+    static getVegsysrefWithKommune(posisjon: Posisjon): string {
+        if (!posisjon.vegsystemreferanse) {
+            return "Ukjent vegsystemreferanse";
+        }
+        switch (posisjon.vegsystemreferanse.vegsystem.vegkategori) {
+            case "E":
+            case "R":
+            case "F":
+                return "" + posisjon.vegsystemreferanse.kortform;
+            default:
+                return "" + posisjon.kommune + " " + posisjon.vegsystemreferanse.kortform;
+        }
     }
 }

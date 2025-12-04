@@ -1,4 +1,4 @@
-import type { HistoricVegobjekt } from "./nvdbTypes.ts";
+import type { HistoricVegobjekt, Posisjon } from "./nvdbTypes.ts";
 export declare class UtilClass {
     /**
      * Converts a `Vegobjekt` to a formatted vegreferanse string.
@@ -32,6 +32,16 @@ export declare class UtilClass {
         position: number;
         lokasjon: import("./nvdbTypes.ts").Stedfesting;
     } | undefined;
+    /**
+     * Beregner meterverdien basert på en gitt relativ posisjon i et `Vegobjekt`.
+     * Finner start- og sluttmeter-egenskapene (id 4571 og 4572) og bruker første stedfesting.
+     * Returnerer 0 hvis nødvendig data mangler, ellers returneres den beregnede meterverdien.
+     *
+     * @param vegobjekt Vegobjektet det skal beregnes meterverdi for.
+     * @param relativePosition Den relative posisjonen som skal konverteres til meterverdi.
+     * @param ignorerRetning Valgfritt flagg for å ignorere retningen ved beregning (standard er false).
+     * @returns Den beregnede meterverdien.
+     */
     static finnRelativMeter(vegobjekt: HistoricVegobjekt, relativePosition: number, ignorerRetning?: boolean): number;
     /**
      * Beregner den nye relative posisjonen basert på meterverdier og egendefinerte relative grenser.
@@ -44,7 +54,20 @@ export declare class UtilClass {
      * @returns Den nye relative posisjonen innenfor det egendefinerte området.
      */
     static calculateCustomRelativePosition(startMeter: number, endMeter: number, relativeStart: number, relativeEnd: number, currentMeter: number): number;
+    /**
+     * Pads a number with leading zeros to reach a specified maximum length.
+     * @param number
+     * @param maxlength
+     */
     static padNumber(number: number, maxlength: number): string;
+    /**
+     * Formats a number to a string with a specified number of decimal places.
+     * Trailing zeros and decimal points are removed as needed.
+     * If the number is zero, returns "0.0".
+     * @param num
+     * @param decimals
+     */
     static formatNumber(num: number, decimals?: number): string;
+    static getVegsysrefWithKommune(posisjon: Posisjon): string;
 }
 //# sourceMappingURL=utilClass.d.ts.map
