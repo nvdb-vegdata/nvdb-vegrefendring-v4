@@ -94,6 +94,13 @@
                             <input type="text" id="vegrefForm_dato" name="dato" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}">
                         </div>
                     </div>
+                    <div style="margin:25px 5px 1px 5px;">
+                        <label class="switch">
+                            <input type="checkbox" id="avansert_vegreg_sok" name="avansert_vegref_sok" value="off">
+                        </label>
+                        <span title="Videresøke på stedfestingen til de historiske vegobjektene søket fant og hent ut alle historiske vegobekt som har vært stedfestet på disse lenkeposisjonene."
+                        >Videresøk på stedfestingen til historisk vegobjekt</span>
+                    </div>
                     <button type="submit" class="btn-primary">Søk vegreferanse</button>
                     <button type="reset" class="btn-secondary">Nullstill skjema</button>
                 </form>
@@ -294,10 +301,10 @@
 
         <div style="margin-bottom:15px;">
             <label class="switch">
-                <input type="checkbox" id="vis532_switch" name="vis532" value="on">
+                <input type="checkbox" id="vis532_switch" name="vis532" value="off">
                 <span class="slider"></span>
             </label>
-            <span style="margin-left:10px;">Vis informasjon om vegobjekttype 532 i resultater</span>
+            <span style="margin-left:10px;">Vis informasjon om historisk vegobjekttype 532 i resultater</span>
         </div>
 
         <section id="results" class="results-section">

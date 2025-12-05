@@ -6,13 +6,40 @@ const service = new VegreferanseService();
  */
 export class VegrefController {
     /**
+     * Finds positions by a given Vegreferanse in a simplified way.
+     * Returns an array of objects with vegreferanse, dates, position info, coordinates, and system reference.
+     * @param vegreferanse - The Vegreferanse object to search for.
+     * @param tidspunkt - Optional timestamp for historic lookup.
+     * @returns Promise resolving to an array of position and reference objects.
+     */
+    async findPosisjonerByVegreferanse(vegreferanse, tidspunkt) {
+        const historicVegobjekter = await service.findVegreferanse(vegreferanse, tidspunkt);
+        var map = historicVegobjekter.objekter.map(async (objekt) => {
+            const lenkeid = objekt.lokasjon.stedfestinger[0]?.veglenkesekvensid || -1;
+            const pos = UtilClass.finnRelativPosisjon(objekt, vegreferanse.meter, false)?.position || 0;
+            const vegsystemreferanse = await service.findVegsystemReferanseByLenkeposisjon(lenkeid, pos, tidspunkt);
+            return {
+                vegreferanse: "" + UtilClass.toVegreferanse(objekt),
+                fraDato: "" + objekt.metadata.startdato,
+                tilDato: "" + objekt.metadata.sluttdato,
+                veglenkeposisjon: "" + objekt.lokasjon.stedfestinger[0]?.startposisjon + "-" + objekt.lokasjon.stedfestinger[0]?.sluttposisjon + "@" + lenkeid,
+                veglenkeid: lenkeid,
+                relativPosisjon: pos,
+                beregnetVegreferanse: "" + UtilClass.toVegreferanseWithMeter(objekt, UtilClass.finnRelativMeter(objekt, pos || 0) || 0),
+                koordinat: "" + vegsystemreferanse.geometri.wkt,
+                vegsystemreferanse: "" + UtilClass.getVegsysrefWithKommune(vegsystemreferanse)
+            };
+        });
+        return Promise.all(map);
+    }
+    /**
      * Finds positions by a given Vegreferanse and optional timestamp.
      * Returns an array of objects containing vegreferanse, dates, position info, coordinates, and system reference.
      * @param vegreferanse - The Vegreferanse object to search for.
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    async findPosisjonerByVegreferanse(vegreferanse, tidspunkt) {
+    async findPosisjonerByVegreferanserAdvanced(vegreferanse, tidspunkt) {
         const promises = (await service.findVegreferanse(vegreferanse, tidspunkt)).objekter.map(async (objekt) => {
             const lenkeid = objekt.lokasjon.stedfestinger[0]?.veglenkesekvensid || -1;
             const pos = UtilClass.finnRelativPosisjon(objekt, vegreferanse.meter, false)?.position || 0;
@@ -22,7 +49,7 @@ export class VegrefController {
                 const veglenkeid = stedfesting?.veglenkesekvensid || -1;
                 const startPos = stedfesting?.startposisjon || 0;
                 const sluttPos = stedfesting?.sluttposisjon || 0;
-                const posisjon = await service.findVegsystemReferanseByLenkeposisjon(veglenkeid, pos);
+                const vegsysrefAtPosition = await service.findVegsystemReferanseByLenkeposisjon(veglenkeid, pos);
                 return {
                     vegreferanse: "" + UtilClass.toVegreferanse(feature),
                     fraDato: "" + feature.metadata.startdato,
@@ -31,22 +58,22 @@ export class VegrefController {
                     veglenkeid: veglenkeid,
                     relativPosisjon: pos,
                     beregnetVegreferanse: "" + UtilClass.toVegreferanseWithMeter(feature, UtilClass.finnRelativMeter(feature, pos || 0) || 0),
-                    koordinat: "" + posisjon?.geometri?.wkt,
-                    vegsystemreferanse: "" + UtilClass.getVegsysrefWithKommune(posisjon)
+                    koordinat: "" + vegsysrefAtPosition?.geometri?.wkt,
+                    vegsystemreferanse: "" + UtilClass.getVegsysrefWithKommune(vegsysrefAtPosition)
                 };
             }));
         });
         return (await Promise.all(promises)).flat();
     }
     /**
-     * Finds positions by a given road system reference (`vegreferanse`) and optional timestamp.
+     * Finds positions by a given road system reference (`vegsystemreferanse`) and optional timestamp.
      * Returns an array of objects containing road reference, dates, position info, coordinates, and system reference.
-     * @param vegreferanse - The road system reference to search for.
+     * @param vegsystemreferanse - The road system reference to search for.
      * @param tidspunkt - Optional date for historical lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    async findPosisjonerByVegsystemreferanse(vegreferanse, tidspunkt) {
-        var posisjon = await service.findPosisjonForVegsystemreferanse(vegreferanse, tidspunkt);
+    async findPosisjonerByVegsystemreferanse(vegsystemreferanse, tidspunkt) {
+        var posisjon = await service.findPosisjonForVegsystemreferanse(vegsystemreferanse, tidspunkt);
         if (!posisjon.veglenkesekvens) {
             return []; // Return empty list if no link sequence found
         }

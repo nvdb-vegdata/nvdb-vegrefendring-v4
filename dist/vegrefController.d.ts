@@ -5,8 +5,8 @@ import type { VegrefAndVegsystemreferanse } from "./nvdbTypes.js";
  */
 export declare class VegrefController {
     /**
-     * Finds positions by a given Vegreferanse and optional timestamp.
-     * Returns an array of objects containing vegreferanse, dates, position info, coordinates, and system reference.
+     * Finds positions by a given Vegreferanse in a simplified way.
+     * Returns an array of objects with vegreferanse, dates, position info, coordinates, and system reference.
      * @param vegreferanse - The Vegreferanse object to search for.
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
@@ -23,13 +23,31 @@ export declare class VegrefController {
         vegsystemreferanse: string;
     }[]>;
     /**
-     * Finds positions by a given road system reference (`vegreferanse`) and optional timestamp.
+     * Finds positions by a given Vegreferanse and optional timestamp.
+     * Returns an array of objects containing vegreferanse, dates, position info, coordinates, and system reference.
+     * @param vegreferanse - The Vegreferanse object to search for.
+     * @param tidspunkt - Optional timestamp for historic lookup.
+     * @returns Promise resolving to an array of position and reference objects.
+     */
+    findPosisjonerByVegreferanserAdvanced(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<{
+        vegreferanse: string;
+        fraDato: string;
+        tilDato: string;
+        veglenkeposisjon: string;
+        veglenkeid: number;
+        relativPosisjon: number;
+        beregnetVegreferanse: string;
+        koordinat: string;
+        vegsystemreferanse: string;
+    }[]>;
+    /**
+     * Finds positions by a given road system reference (`vegsystemreferanse`) and optional timestamp.
      * Returns an array of objects containing road reference, dates, position info, coordinates, and system reference.
-     * @param vegreferanse - The road system reference to search for.
+     * @param vegsystemreferanse - The road system reference to search for.
      * @param tidspunkt - Optional date for historical lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    findPosisjonerByVegsystemreferanse(vegreferanse: String, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]>;
+    findPosisjonerByVegsystemreferanse(vegsystemreferanse: String, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]>;
     /**
      * Finds positions by a given link sequence ID (`linkid`) and position, with optional timestamp.
      * Returns an array of objects containing road reference, dates, position info, coordinates, and system reference.

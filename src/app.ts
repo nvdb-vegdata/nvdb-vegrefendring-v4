@@ -10,6 +10,13 @@ document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSe
 document.getElementById('vegsysrefForm')?.addEventListener('submit', handleVegsysrefSearch);
 document.getElementById('posForm')?.addEventListener('submit', handlePosSearch);
 document.getElementById('lenkeForm')?.addEventListener('submit', handleLenkesekvensSearch);
+document.getElementById("vis532_switch")?.addEventListener('change', function (this: HTMLInputElement) {
+    const historicElements = document.getElementsByClassName("historic_532");
+    for (let i = 0; i < historicElements.length; i++) {
+        const element = historicElements[i] as HTMLElement;
+        element.style.display = this.checked ? "" : "none";
+    }
+});
 
 ['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
     document.getElementById(formId)?.addEventListener('reset', function (e) {
@@ -43,7 +50,12 @@ async function handleVegrefSearch(event: Event) {
             + vegnr
             + "hp" + hp
             + "m" + meter);
-        displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+
+        if (((document.getElementById("avansert_vegreg_sok") as HTMLInputElement).checked)) {
+            displayResults(await vegrefController.findPosisjonerByVegreferanserAdvanced(vegreferanse, tidspunkt));
+        } else {
+            displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+        }
     }
 }
 
@@ -148,8 +160,7 @@ function showLoading() {
 
 async function displayResults(result: VegrefAndVegsystemreferanse[]) {
     const resultsDiv = (document.getElementById('results') as HTMLDivElement);
-    const vis532 : boolean = (document.getElementById('vis532_switch') as HTMLInputElement).checked;
-
+    const vis532: boolean = (document.getElementById('vis532_switch') as HTMLInputElement).checked;
 
 
     if (result.length == 0) {
@@ -160,11 +171,8 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
             '<thead>' +
             '<tr>' +
             '<th>Vegreferanse</th>' +
-            (vis532 === true
-                ? '<th>Vegreferanse <br>(Objekttype 532)</th>' +
-                  '<th>Veglenkeposisjon <br>( 532 )</th>'
-                : '')
-            +
+            '<th class="historic_532" style="display:none">Vegreferanse <br>(Objekttype 532)</th>' +
+            '<th class="historic_532" style="display:none">Veglenkeposisjon <br>( 532 )</th>' +
             '<th>Fa dato</th>' +
             '<th>Til dato</th>' +
             '<th>Veglenkeposisjon</th>' +
@@ -194,13 +202,11 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 }
                 html += `<tr class="${rowClass}">
             <td>${feature.beregnetVegreferanse}</td>
-            ${vis532 === true
-                ? `<td>${feature.vegreferanse}</td>
-                   <td>${feature.veglenkeposisjon}</td>`
-                : ''}
+            <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
+            <td class="historic_532" style="display:none">${feature.veglenkeposisjon}</td>
             <td>${feature.fraDato}</td>
             <td>${feature.tilDato}</td>
-            <td>${UtilClass.formatNumber(feature.relativPosisjon,6)}@${feature.veglenkeid}</td>
+            <td>${UtilClass.formatNumber(feature.relativPosisjon, 6)}@${feature.veglenkeid}</td>
             <td>${feature.koordinat}</td>
             <td>${feature.vegsystemreferanse}</td>
             </tr>`;

@@ -6,6 +6,13 @@ document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSe
 document.getElementById('vegsysrefForm')?.addEventListener('submit', handleVegsysrefSearch);
 document.getElementById('posForm')?.addEventListener('submit', handlePosSearch);
 document.getElementById('lenkeForm')?.addEventListener('submit', handleLenkesekvensSearch);
+document.getElementById("vis532_switch")?.addEventListener('change', function () {
+    const historicElements = document.getElementsByClassName("historic_532");
+    for (let i = 0; i < historicElements.length; i++) {
+        const element = historicElements[i];
+        element.style.display = this.checked ? "" : "none";
+    }
+});
 ['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
     document.getElementById(formId)?.addEventListener('reset', function (e) {
         e.preventDefault();
@@ -35,7 +42,12 @@ async function handleVegrefSearch(event) {
             + vegnr
             + "hp" + hp
             + "m" + meter);
-        displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+        if ((document.getElementById("avansert_vegreg_sok").checked)) {
+            displayResults(await vegrefController.findPosisjonerByVegreferanserAdvanced(vegreferanse, tidspunkt));
+        }
+        else {
+            displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+        }
     }
 }
 async function handleLenkesekvensSearch(event) {
@@ -134,12 +146,9 @@ async function displayResults(result) {
             '<thead>' +
             '<tr>' +
             '<th>Vegreferanse</th>' +
-            (vis532 === true
-                ? '<th>Vegreferanse <br>(Objekttype 532)</th>' +
-                    '<th>Veglenkeposisjon <br>( 532 )</th>'
-                : '')
-            +
-                '<th>Fa dato</th>' +
+            '<th class="historic_532" style="display:none">Vegreferanse <br>(Objekttype 532)</th>' +
+            '<th class="historic_532" style="display:none">Veglenkeposisjon <br>( 532 )</th>' +
+            '<th>Fa dato</th>' +
             '<th>Til dato</th>' +
             '<th>Veglenkeposisjon</th>' +
             '<th>Koordinat</th>' +
@@ -166,10 +175,8 @@ async function displayResults(result) {
             }
             html += `<tr class="${rowClass}">
             <td>${feature.beregnetVegreferanse}</td>
-            ${vis532 === true
-                ? `<td>${feature.vegreferanse}</td>
-                   <td>${feature.veglenkeposisjon}</td>`
-                : ''}
+            <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
+            <td class="historic_532" style="display:none">${feature.veglenkeposisjon}</td>
             <td>${feature.fraDato}</td>
             <td>${feature.tilDato}</td>
             <td>${UtilClass.formatNumber(feature.relativPosisjon, 6)}@${feature.veglenkeid}</td>
