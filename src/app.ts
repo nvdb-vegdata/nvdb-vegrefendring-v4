@@ -4,12 +4,16 @@ import {VegrefController} from "./vegrefController.js";
 import {UtilClass} from "./utilClass.js";
 
 
+// Instantiate the controller
 var vegrefController = new VegrefController();
 
+// Event listeners for form submissions
 document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSearch);
 document.getElementById('vegsysrefForm')?.addEventListener('submit', handleVegsysrefSearch);
 document.getElementById('posForm')?.addEventListener('submit', handlePosSearch);
 document.getElementById('lenkeForm')?.addEventListener('submit', handleLenkesekvensSearch);
+
+// Event listener for historic data toggle
 document.getElementById("vis532_switch")?.addEventListener('change', function (this: HTMLInputElement) {
     const historicElements = document.getElementsByClassName("historic_532");
     for (let i = 0; i < historicElements.length; i++) {
@@ -18,6 +22,7 @@ document.getElementById("vis532_switch")?.addEventListener('change', function (t
     }
 });
 
+// Event listeners for form resets
 ['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
     document.getElementById(formId)?.addEventListener('reset', function (e) {
         e.preventDefault();
@@ -26,6 +31,7 @@ document.getElementById("vis532_switch")?.addEventListener('change', function (t
     });
 });
 
+// Event listener for extraType selection change
 document.addEventListener('DOMContentLoaded', function () {
     const extraType = document.getElementById('extraType') as HTMLSelectElement | null;
     const sideanleggsdelGroup = document.getElementById('sideanleggsdel-group') as HTMLElement | null;
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //     }).addTo(map);
 // });
 
+// Event listener for toggling search sections
 document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggleSearchSections');
     const searchSections = document.querySelector('.search-sections');
@@ -94,18 +101,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+// Handler function for vegreferanse search form submission
 async function handleVegrefSearch(event: Event) {
     event.preventDefault();
 
-    const fylke = parseInt((document.getElementById('fylke') as HTMLInputElement)?.value || '0');
-    const kommune = parseInt((document.getElementById('kommune') as HTMLInputElement)?.value || '0');
-    const kat = (document.getElementById('kat') as HTMLInputElement)?.value || 'E';
-    const stat = (document.getElementById('stat') as HTMLInputElement)?.value || 'V';
-    const vegnr = parseInt((document.getElementById('vegnr') as HTMLInputElement)?.value || '0');
-    const hp = parseInt((document.getElementById('hp') as HTMLInputElement)?.value || '1');
-    const meter = parseInt((document.getElementById('meter') as HTMLInputElement)?.value || '0');
-    const tidspunkt = (document.getElementById('vegrefForm_dato') as HTMLInputElement)?.value
-        ? new Date((document.getElementById('vegrefForm_dato') as HTMLInputElement).value)
+    const fylke = parseInt((document.getElementById('vegref_fylke') as HTMLInputElement)?.value || '0');
+    const kommune = parseInt((document.getElementById('vegref_kommune') as HTMLInputElement)?.value || '0');
+    const kat = (document.getElementById('vegref_kat') as HTMLInputElement)?.value || 'E';
+    const stat = (document.getElementById('vegref_stat') as HTMLInputElement)?.value || 'V';
+    const vegnr = parseInt((document.getElementById('vegref_vegnr') as HTMLInputElement)?.value || '0');
+    const hp = parseInt((document.getElementById('vegref_hp') as HTMLInputElement)?.value || '1');
+    const meter = parseInt((document.getElementById('vegref_meter') as HTMLInputElement)?.value || '0');
+    const tidspunkt = (document.getElementById('vegref_dato') as HTMLInputElement)?.value
+        ? new Date((document.getElementById('vegref_dato') as HTMLInputElement).value)
         : undefined;
 
     if (fylke && kat && vegnr) {
@@ -127,7 +136,7 @@ async function handleVegrefSearch(event: Event) {
     }
 }
 
-
+// Handler function for lenkesekvens search form submission
 async function handleLenkesekvensSearch(event: Event) {
     event.preventDefault();
 
@@ -151,19 +160,20 @@ async function handleLenkesekvensSearch(event: Event) {
     }
 }
 
+// Handler function for vegsystemreferanse search form submission
 async function handleVegsysrefSearch(event: Event) {
     event.preventDefault();
 
-    const fylke = parseInt((document.getElementById('fylke2') as HTMLInputElement)?.value) || undefined;
-    const kommune = parseInt((document.getElementById('kommune2') as HTMLInputElement)?.value) || undefined;
-    const kat = (document.getElementById('kat2') as HTMLInputElement)?.value || 'E';
-    const stat = (document.getElementById('stat2') as HTMLInputElement)?.value || 'V';
-    const vegnr = parseInt((document.getElementById('vegnr2') as HTMLInputElement)?.value || '0');
-    const strekning = parseInt((document.getElementById('strekning') as HTMLInputElement)?.value || '1');
-    const delstrekning = parseInt((document.getElementById('delstrekning') as HTMLInputElement)?.value || '1');
-    const meter = parseInt((document.getElementById('meter2') as HTMLInputElement)?.value || '0');
-    const tidspunkt = (document.getElementById('vegsysrefForm_dato') as HTMLInputElement)?.value
-        ? new Date((document.getElementById('vegsysrefForm_dato') as HTMLInputElement).value)
+    const fylke = parseInt((document.getElementById('vegsysref_fylke') as HTMLInputElement)?.value) || undefined;
+    const kommune = parseInt((document.getElementById('vegsysref_kommune') as HTMLInputElement)?.value) || undefined;
+    const kat = (document.getElementById('vegsysref_kat') as HTMLInputElement)?.value || 'E';
+    const stat = (document.getElementById('vegsysref_stat') as HTMLInputElement)?.value || 'V';
+    const vegnr = parseInt((document.getElementById('vegsysref_vegnr') as HTMLInputElement)?.value || '0');
+    const strekning = parseInt((document.getElementById('vegsysref_strekning') as HTMLInputElement)?.value || '1');
+    const delstrekning = parseInt((document.getElementById('vegsysref_delstrekning') as HTMLInputElement)?.value || '1');
+    const meter = parseInt((document.getElementById('vegsysref_meter') as HTMLInputElement)?.value || '0');
+    const tidspunkt = (document.getElementById('vegsysref_dato') as HTMLInputElement)?.value
+        ? new Date((document.getElementById('vegsysref_dato') as HTMLInputElement).value)
         : undefined;
 
 
@@ -204,7 +214,7 @@ async function handleVegsysrefSearch(event: Event) {
     displayResults(await vegrefController.findPosisjonerByVegsystemreferanse(vegsystemreferanse, tidspunkt));
 }
 
-
+// Handler function for position search form submission
 async function handlePosSearch(event: Event) {
     event.preventDefault();
 
@@ -221,6 +231,7 @@ async function handlePosSearch(event: Event) {
     }
 }
 
+// Utility functions for displaying loading, results, and errors
 function showLoading() {
     const elementById = document.getElementById('results');
     if (elementById) elementById.innerHTML = '<p>Søker...</p>';
@@ -228,8 +239,6 @@ function showLoading() {
 
 async function displayResults(result: VegrefAndVegsystemreferanse[]) {
     const resultsDiv = (document.getElementById('results') as HTMLDivElement);
-    const vis532: boolean = (document.getElementById('vis532_switch') as HTMLInputElement).checked;
-
 
     if (result.length == 0) {
         if (resultsDiv) resultsDiv.innerHTML = '<p>Ingen resultater funnet.</p>';

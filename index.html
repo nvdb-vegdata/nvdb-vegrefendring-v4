@@ -34,16 +34,16 @@
                 <form id="vegrefForm" class="search-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="fylke">Fylke *</label>
-                            <input type="number" id="fylke" name="fylke" value="8" min="1" max="99" required>
+                            <label for="vegref_fylke">Fylke *</label>
+                            <input type="number" id="vegref_fylke" name="fylke" value="8" min="1" max="99" required>
                         </div>
                         <div class="form-group">
-                            <label for="kommune">Kommune</label>
-                            <input type="text" id="kommune" name="kommune" placeholder="00" maxlength="2">
+                            <label for="vegref_kommune">Kommune</label>
+                            <input type="text" id="vegref_kommune" name="kommune" placeholder="00" maxlength="2">
                         </div>
                         <div class="form-group">
-                            <label for="kat">Kategori *</label>
-                            <select id="kat" name="kat" required>
+                            <label for="vegref_kat">Kategori *</label>
+                            <select id="vegref_kat" name="kat" required>
                                 <option value="">Velg kategori</option>
                                 <option value="E" selected>E - Europavei</option>
                                 <option value="R">R - Riksvei</option>
@@ -57,8 +57,8 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="stat">Status</label>
-                            <select id="stat" name="stat">
+                            <label for="vegref_stat">Status</label>
+                            <select id="vegref_stat" name="stat">
                                 <option value="V" selected>V - Eksisterende vei</option>
                                 <option value="A">A - Arm</option>
                                 <option value="B">B - Beredskapsvei</option>
@@ -76,22 +76,22 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="vegnr">Vegnummer *</label>
-                            <input type="number" id="vegnr" name="vegnr" value="18" min="1" max="99999" required>
+                            <label for="vegref_vegnr">Vegnummer *</label>
+                            <input type="number" id="vegref_vegnr" name="vegnr" value="18" min="1" max="99999" required>
                         </div>
                         <div class="form-group">
-                            <label for="hp">Hovedparsell</label>
-                            <input type="number" id="hp" name="hp" value="1" min="1" max="999">
+                            <label for="vegref_hp">Hovedparsell</label>
+                            <input type="number" id="vegref_hp" name="hp" value="1" min="1" max="999">
                         </div>
                         <div class="form-group">
-                            <label for="meter">Meter</label>
-                            <input type="number" id="meter" name="meter" value="0" min="0" max="99999">
+                            <label for="vegref_meter">Meter</label>
+                            <input type="number" id="vegref_meter" name="meter" value="0" min="0" max="99999">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="vegrefForm_dato">Dato (YYYY-MM-DD)</label>
-                            <input type="text" id="vegrefForm_dato" name="dato" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}">
+                            <label for="vegref_dato">Dato (YYYY-MM-DD)</label>
+                            <input type="text" id="vegref_dato" name="dato" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}">
                         </div>
                     </div>
                     <div style="margin:25px 5px 1px 5px;">
@@ -110,16 +110,16 @@
                 <form id="vegsysrefForm" class="search-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="fylke2">Fylke</label>
-                            <input type="number" id="fylke2" name="fylke"  min="1" max="99">
+                            <label for="vegsysref_fylke">Fylke</label>
+                            <input type="number" id="vegsysref_fylke" name="fylke"  min="1" max="99">
                         </div>
                         <div class="form-group">
-                            <label for="kommune2">Kommune</label>
-                            <input type="text" id="kommune2" name="kommune" placeholder="00" maxlength="2">
+                            <label for="vegsysref_kommune">Kommune</label>
+                            <input type="text" id="vegsysref_kommune" name="kommune" placeholder="00" maxlength="2">
                         </div>
                         <div class="form-group">
-                            <label for="kat2">Kategori *</label>
-                            <select id="kat2" name="kat" required>
+                            <label for="vegsysref_kat">Kategori *</label>
+                            <select id="vegsysref_kat" name="kat" required>
                                 <option value="">Velg kategori</option>
                                 <option value="E" selected>E - Europavei</option>
                                 <option value="R">R - Riksvei</option>
@@ -133,8 +133,8 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="stat2">Status</label>
-                            <select id="stat2" name="stat">
+                            <label for="vegsysref_stat">Status</label>
+                            <select id="vegsysref_stat" name="stat">
                                 <option value="V" selected>V - Eksisterende vei</option>
                                 <option value="A">A - Arm</option>
                                 <option value="B">B - Beredskapsvei</option>
@@ -152,20 +152,20 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="vegnr2">Vegnummer *</label>
-                            <input type="number" id="vegnr2" name="vegnr" value="18" min="1" max="99999" required>
+                            <label for="vegsysref_vegnr">Vegnummer *</label>
+                            <input type="number" id="vegsysref_vegnr" name="vegnr" value="18" min="1" max="99999" required>
                         </div>
                         <div class="form-group">
-                            <label for="strekning">Strekning</label>
-                            <input type="number" id="strekning" name="hp" value="1" min="1" max="999">
+                            <label for="vegsysref_strekning">Strekning</label>
+                            <input type="number" id="vegsysref_strekning" name="hp" value="1" min="1" max="999">
                         </div>
                         <div class="form-group">
-                            <label for="delstrekning">Delstrekning</label>
-                            <input type="number" id="delstrekning" name="hp" value="1" min="1" max="999">
+                            <label for="vegsysref_delstrekning">Delstrekning</label>
+                            <input type="number" id="vegsysref_delstrekning" name="hp" value="1" min="1" max="999">
                         </div>
                         <div class="form-group">
-                            <label for="meter2">Meter</label>
-                            <input type="number" id="meter2" name="meter" value="0" min="0" max="99999">
+                            <label for="vegsysref_meter">Meter</label>
+                            <input type="number" id="vegsysref_meter" name="meter" value="0" min="0" max="99999">
                         </div>
                     </div>
 
@@ -191,8 +191,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="vegsysrefForm_dato">Dato (YYYY-MM-DD)</label>
-                            <input type="text" id="vegsysrefForm_dato" name="dato" placeholder="YYYY-MM-DD"
+                            <label for="vegsysref_dato">Dato (YYYY-MM-DD)</label>
+                            <input type="text" id="vegsysref_dato" name="dato" placeholder="YYYY-MM-DD"
                                    pattern="\d{4}-\d{2}-\d{2}">
                         </div>
                     </div>

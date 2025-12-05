@@ -1,11 +1,14 @@
 import { Vegreferanse } from "./vegreferanse.js";
 import { VegrefController } from "./vegrefController.js";
 import { UtilClass } from "./utilClass.js";
+// Instantiate the controller
 var vegrefController = new VegrefController();
+// Event listeners for form submissions
 document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSearch);
 document.getElementById('vegsysrefForm')?.addEventListener('submit', handleVegsysrefSearch);
 document.getElementById('posForm')?.addEventListener('submit', handlePosSearch);
 document.getElementById('lenkeForm')?.addEventListener('submit', handleLenkesekvensSearch);
+// Event listener for historic data toggle
 document.getElementById("vis532_switch")?.addEventListener('change', function () {
     const historicElements = document.getElementsByClassName("historic_532");
     for (let i = 0; i < historicElements.length; i++) {
@@ -13,6 +16,7 @@ document.getElementById("vis532_switch")?.addEventListener('change', function ()
         element.style.display = this.checked ? "" : "none";
     }
 });
+// Event listeners for form resets
 ['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
     document.getElementById(formId)?.addEventListener('reset', function (e) {
         e.preventDefault();
@@ -20,6 +24,7 @@ document.getElementById("vis532_switch")?.addEventListener('change', function ()
         this.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
     });
 });
+// Event listener for extraType selection change
 document.addEventListener('DOMContentLoaded', function () {
     const extraType = document.getElementById('extraType');
     const sideanleggsdelGroup = document.getElementById('sideanleggsdel-group');
@@ -72,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //         attribution: '© OpenStreetMap contributors'
 //     }).addTo(map);
 // });
+// Event listener for toggling search sections
 document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggleSearchSections');
     const searchSections = document.querySelector('.search-sections');
@@ -86,17 +92,18 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleBtn.innerHTML = minimized ? '<span id="toggleIcon" style="font-size:1.2em;">▼</span>' : '<span id="toggleIcon" style="font-size:1.2em;">▲</span>';
     });
 });
+// Handler function for vegreferanse search form submission
 async function handleVegrefSearch(event) {
     event.preventDefault();
-    const fylke = parseInt(document.getElementById('fylke')?.value || '0');
-    const kommune = parseInt(document.getElementById('kommune')?.value || '0');
-    const kat = document.getElementById('kat')?.value || 'E';
-    const stat = document.getElementById('stat')?.value || 'V';
-    const vegnr = parseInt(document.getElementById('vegnr')?.value || '0');
-    const hp = parseInt(document.getElementById('hp')?.value || '1');
-    const meter = parseInt(document.getElementById('meter')?.value || '0');
-    const tidspunkt = document.getElementById('vegrefForm_dato')?.value
-        ? new Date(document.getElementById('vegrefForm_dato').value)
+    const fylke = parseInt(document.getElementById('vegref_fylke')?.value || '0');
+    const kommune = parseInt(document.getElementById('vegref_kommune')?.value || '0');
+    const kat = document.getElementById('vegref_kat')?.value || 'E';
+    const stat = document.getElementById('vegref_stat')?.value || 'V';
+    const vegnr = parseInt(document.getElementById('vegref_vegnr')?.value || '0');
+    const hp = parseInt(document.getElementById('vegref_hp')?.value || '1');
+    const meter = parseInt(document.getElementById('vegref_meter')?.value || '0');
+    const tidspunkt = document.getElementById('vegref_dato')?.value
+        ? new Date(document.getElementById('vegref_dato').value)
         : undefined;
     if (fylke && kat && vegnr) {
         showLoading();
@@ -116,6 +123,7 @@ async function handleVegrefSearch(event) {
         }
     }
 }
+// Handler function for lenkesekvens search form submission
 async function handleLenkesekvensSearch(event) {
     event.preventDefault();
     const linkid = parseFloat(document.getElementById('lenkesekvensId').value || '0');
@@ -138,18 +146,19 @@ async function handleLenkesekvensSearch(event) {
         }
     }
 }
+// Handler function for vegsystemreferanse search form submission
 async function handleVegsysrefSearch(event) {
     event.preventDefault();
-    const fylke = parseInt(document.getElementById('fylke2')?.value) || undefined;
-    const kommune = parseInt(document.getElementById('kommune2')?.value) || undefined;
-    const kat = document.getElementById('kat2')?.value || 'E';
-    const stat = document.getElementById('stat2')?.value || 'V';
-    const vegnr = parseInt(document.getElementById('vegnr2')?.value || '0');
-    const strekning = parseInt(document.getElementById('strekning')?.value || '1');
-    const delstrekning = parseInt(document.getElementById('delstrekning')?.value || '1');
-    const meter = parseInt(document.getElementById('meter2')?.value || '0');
-    const tidspunkt = document.getElementById('vegsysrefForm_dato')?.value
-        ? new Date(document.getElementById('vegsysrefForm_dato').value)
+    const fylke = parseInt(document.getElementById('vegsysref_fylke')?.value) || undefined;
+    const kommune = parseInt(document.getElementById('vegsysref_kommune')?.value) || undefined;
+    const kat = document.getElementById('vegsysref_kat')?.value || 'E';
+    const stat = document.getElementById('vegsysref_stat')?.value || 'V';
+    const vegnr = parseInt(document.getElementById('vegsysref_vegnr')?.value || '0');
+    const strekning = parseInt(document.getElementById('vegsysref_strekning')?.value || '1');
+    const delstrekning = parseInt(document.getElementById('vegsysref_delstrekning')?.value || '1');
+    const meter = parseInt(document.getElementById('vegsysref_meter')?.value || '0');
+    const tidspunkt = document.getElementById('vegsysref_dato')?.value
+        ? new Date(document.getElementById('vegsysref_dato').value)
         : undefined;
     showLoading();
     var vegsystemreferanse = ""
@@ -182,6 +191,7 @@ async function handleVegsysrefSearch(event) {
     }
     displayResults(await vegrefController.findPosisjonerByVegsystemreferanse(vegsystemreferanse, tidspunkt));
 }
+// Handler function for position search form submission
 async function handlePosSearch(event) {
     event.preventDefault();
     const easting = parseFloat(document.getElementById('easting')?.value || '0');
@@ -194,6 +204,7 @@ async function handlePosSearch(event) {
         displayResults(await vegrefController.findPosisjonerByCoordinates(northing, easting, tidspunkt));
     }
 }
+// Utility functions for displaying loading, results, and errors
 function showLoading() {
     const elementById = document.getElementById('results');
     if (elementById)
@@ -201,7 +212,6 @@ function showLoading() {
 }
 async function displayResults(result) {
     const resultsDiv = document.getElementById('results');
-    const vis532 = document.getElementById('vis532_switch').checked;
     if (result.length == 0) {
         if (resultsDiv)
             resultsDiv.innerHTML = '<p>Ingen resultater funnet.</p>';
