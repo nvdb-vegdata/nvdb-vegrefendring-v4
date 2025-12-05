@@ -26,6 +26,74 @@ document.getElementById("vis532_switch")?.addEventListener('change', function (t
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const extraType = document.getElementById('extraType') as HTMLSelectElement | null;
+    const sideanleggsdelGroup = document.getElementById('sideanleggsdel-group') as HTMLElement | null;
+    const kryssdelGroup = document.getElementById('kryssdel-group') as HTMLElement | null;
+    const sideanleggsdelInputs = [
+        document.getElementById('sideanleggsdel') as HTMLInputElement,
+        document.getElementById('sideanleggsdel_meter') as HTMLInputElement
+    ];
+    const kryssdelInputs = [
+        document.getElementById('kryssdel') as HTMLInputElement,
+        document.getElementById('kryssdel_meter') as HTMLInputElement
+    ];
+
+    function setRequired(inputs: HTMLElement[], required: boolean) {
+        inputs.forEach((input: HTMLElement) => {
+            if (required) {
+                input.setAttribute('required', '');
+            } else {
+                input.removeAttribute('required');
+            }
+        });
+    }
+
+    extraType?.addEventListener('change', function () {
+        const value = (this as HTMLSelectElement).value;
+        if (sideanleggsdelGroup && kryssdelGroup) {
+            if (value === 'sideanlegg') {
+                sideanleggsdelGroup.style.display = '';
+                kryssdelGroup.style.display = 'none';
+                setRequired(sideanleggsdelInputs, true);
+                setRequired(kryssdelInputs, false);
+            } else if (value === 'kryssystem') {
+                sideanleggsdelGroup.style.display = 'none';
+                kryssdelGroup.style.display = '';
+                setRequired(sideanleggsdelInputs, false);
+                setRequired(kryssdelInputs, true);
+            } else {
+                sideanleggsdelGroup.style.display = 'none';
+                kryssdelGroup.style.display = 'none';
+                setRequired(sideanleggsdelInputs, false);
+                setRequired(kryssdelInputs, false);
+            }
+        }
+    });
+});
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     var map = L.map('map').setView([60.472, 8.4689], 5); // Centered on Norway
+//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//         attribution: '© OpenStreetMap contributors'
+//     }).addTo(map);
+// });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('toggleSearchSections');
+    const searchSections = document.querySelector('.search-sections');
+    let minimized = false;
+    toggleBtn?.addEventListener('click', function () {
+        minimized = !minimized;
+        Array.from(searchSections?.children ?? []).forEach(child => {
+            if (child !== toggleBtn) {
+                (child as HTMLElement).style.display = minimized ? 'none' : '';
+            }
+        });
+        toggleBtn.innerHTML = minimized ? '<span id="toggleIcon" style="font-size:1.2em;">▼</span>' : '<span id="toggleIcon" style="font-size:1.2em;">▲</span>';
+    });
+});
+
 async function handleVegrefSearch(event: Event) {
     event.preventDefault();
 
