@@ -32,7 +32,7 @@ export class VegrefController {
                 veglenkeid: lenkeid,
                 relativPosisjon: pos,
                 beregnetVegreferanse: "" + UtilClass.toVegreferanseWithMeter(objekt, UtilClass.finnRelativMeter(objekt, pos || 0) || 0),
-                koordinat: "" + vegsystemreferanse.geometri.wkt,
+                koordinat: "" + vegsystemreferanse.geometri?.wkt,
                 vegsystemreferanse: "" + UtilClass.getVegsysrefWithKommune(vegsystemreferanse)
             }
         });

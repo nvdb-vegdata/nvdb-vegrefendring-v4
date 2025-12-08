@@ -278,30 +278,39 @@ async function displayResults(result) {
                 lastVeglenkeid = feature.veglenkeid;
                 rowClass = rowClass === 'grey1' ? 'grey2' : 'grey1';
             }
-            const geom = Terraformer.WKT.parse(feature.koordinat);
             var latlng = { lat: 0, lng: 0 };
-            if (geom.type === 'Point') {
-                const [x, y] = geom.coordinates;
-                latlng = convertUTM33ToWGS84LatLong(x, y);
-                // Check if a marker already exists at this position
-                const existingMarker = markers.find(m => {
-                    const pos = m.getLatLng();
-                    return pos.lat === latlng.lat && pos.lng === latlng.lng;
-                });
-                if (existingMarker) {
-                    // Append to existing popup content
-                    const currentContent = existingMarker.getPopup()?.getContent() || '';
-                    existingMarker.bindPopup(currentContent +
-                        `<br>${feature.fraDato},  ${feature.beregnetVegreferanse}`).openPopup();
-                }
-                else {
-                    const marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
-                    marker.bindPopup(feature.fraDato + ",  " + feature.beregnetVegreferanse).openPopup();
-                    markers.push(marker);
+            if (feature.koordinat === 'undefined' || !feature.koordinat) {
+                latlng = { lat: 0, lng: 0 };
+            }
+            else {
+                const geom = Terraformer.WKT.parse(feature.koordinat);
+                if (geom.type === 'Point') {
+                    const [x, y] = geom.coordinates;
+                    latlng = convertUTM33ToWGS84LatLong(x, y);
+                    // Check if a marker already exists at this position
+                    const existingMarker = markers.find(m => {
+                        const pos = m.getLatLng();
+                        return pos.lat === latlng.lat && pos.lng === latlng.lng;
+                    });
+                    if (existingMarker) {
+                        // Append to existing popup content
+                        const currentContent = existingMarker.getPopup()?.getContent() || '';
+                        existingMarker.bindPopup(currentContent +
+                            `<br>${feature.fraDato},  ${feature.beregnetVegreferanse}`).openPopup();
+                    }
+                    else {
+                        const marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+                        marker.bindPopup(feature.fraDato + ",  " + feature.beregnetVegreferanse).openPopup();
+                        markers.push(marker);
+                    }
                 }
             }
             html += `<tr class="${rowClass}">
-            <td><a href="#" onclick="map.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a></td>
+            <td>
+                ${latlng.lat !== 0
+                ? `<a href="#" onclick="map.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a>`
+                : `${feature.beregnetVegreferanse}`}
+            </td>
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
             <td class="historic_532" style="display:none">${feature.veglenkeposisjon}</td>
             <td>${feature.fraDato}</td>
