@@ -314,13 +314,27 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
 
                 const geom = Terraformer.WKT.parse(feature.koordinat);
 
-                var latlng = { lat: 0, lng: 0 };
+                var latlng = {lat: 0, lng: 0};
                 if (geom.type === 'Point') {
                     const [x, y] = geom.coordinates;
                     latlng = convertUTM33ToWGS84LatLong(x, y);
-                    const marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
-                    marker.bindPopup(feature.fraDato + ",  " + feature.beregnetVegreferanse).openPopup();
-                    markers.push(marker);
+                    // Check if a marker already exists at this position
+                    const existingMarker = markers.find(m => {
+                        const pos = m.getLatLng();
+                        return pos.lat === latlng.lat && pos.lng === latlng.lng;
+                    });
+                    if (existingMarker) {
+                        // Append to existing popup content
+                        const currentContent = existingMarker.getPopup()?.getContent() || '';
+                        existingMarker.bindPopup(
+                            currentContent +
+                            `<br>${feature.fraDato},  ${feature.beregnetVegreferanse}`
+                        ).openPopup();
+                    } else {
+                        const marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+                        marker.bindPopup(feature.fraDato + ",  " + feature.beregnetVegreferanse).openPopup();
+                        markers.push(marker);
+                    }
                 }
 
 
