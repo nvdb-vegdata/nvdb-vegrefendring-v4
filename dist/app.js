@@ -1,8 +1,19 @@
 import { Vegreferanse } from "./vegreferanse.js";
 import { VegrefController } from "./vegrefController.js";
 import { UtilClass } from "./utilClass.js";
+// import * as Terraformer from 'terraformer';
+// import * as L from 'leaflet';
+// import proj4 from 'proj4';
+// import 'terraformer-wkt-parser';
+// Define UTM33 and WGS84 projections
+const UTM33 = '+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs';
+const WGS84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 // Instantiate the controller
 var vegrefController = new VegrefController();
+// Initialize the map
+const map = L.map('map');
+window.map = map;
+const markers = [];
 // Event listeners for form submissions
 document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSearch);
 document.getElementById('vegsysrefForm')?.addEventListener('submit', handleVegsysrefSearch);
@@ -71,12 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-// document.addEventListener('DOMContentLoaded', function () {
-//     var map = L.map('map').setView([60.472, 8.4689], 5); // Centered on Norway
-//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//         attribution: '© OpenStreetMap contributors'
-//     }).addTo(map);
-// });
+document.addEventListener('DOMContentLoaded', function () {
+    map.setView([60.472, 8.4689], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+});
 // Event listener for toggling search sections
 document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggleSearchSections');
@@ -204,7 +213,10 @@ async function handlePosSearch(event) {
         displayResults(await vegrefController.findPosisjonerByCoordinates(northing, easting, tidspunkt));
     }
 }
-// Utility functions for displaying loading, results, and errors
+function clearMarkers() {
+    markers.forEach(marker => marker.remove());
+    markers.length = 0;
+}
 function showLoading() {
     const elementById = document.getElementById('results');
     if (elementById)
@@ -212,6 +224,7 @@ function showLoading() {
 }
 async function displayResults(result) {
     const resultsDiv = document.getElementById('results');
+    clearMarkers();
     if (result.length == 0) {
         if (resultsDiv)
             resultsDiv.innerHTML = '<p>Ingen resultater funnet.</p>';
@@ -249,12 +262,21 @@ async function displayResults(result) {
                 lastVeglenkeid = feature.veglenkeid;
                 rowClass = rowClass === 'grey1' ? 'grey2' : 'grey1';
             }
+            const geom = Terraformer.WKT.parse(feature.koordinat);
+            var latlng = { lat: 0, lng: 0 };
+            if (geom.type === 'Point') {
+                const [x, y] = geom.coordinates;
+                latlng = convertUTM33ToWGS84LatLong(x, y);
+                const marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+                marker.bindPopup(feature.fraDato + ",  " + feature.beregnetVegreferanse).openPopup();
+                markers.push(marker);
+            }
             html += `<tr class="${rowClass}">
-            <td>${feature.beregnetVegreferanse}</td>
+            <td><a href="#" onclick="map.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a></td>
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
             <td class="historic_532" style="display:none">${feature.veglenkeposisjon}</td>
             <td>${feature.fraDato}</td>
-            <td>${feature.tilDato}</td>
+            <td>${feature.tilDato}</td>const map = L.map('map');
             <td>${UtilClass.formatNumber(feature.relativPosisjon, 6)}@${feature.veglenkeid}</td>
             <td>${feature.koordinat}</td>
             <td>${feature.vegsystemreferanse}</td>
@@ -263,6 +285,13 @@ async function displayResults(result) {
         html += '</tbody></table>';
         resultsDiv.innerHTML = html;
     }
+}
+function convertUTM33ToWGS84LatLong(x, y) {
+    let transformed = proj4(UTM33, WGS84, [x, y]);
+    return {
+        'lat': transformed[1] || 0,
+        'lng': transformed[0] || 0
+    };
 }
 function displayError(message) {
     document.getElementById('results').innerHTML = `<p style="color: red;">${message}</p>`;

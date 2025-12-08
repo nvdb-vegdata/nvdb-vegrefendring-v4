@@ -18,6 +18,12 @@ body {
     padding: 20px;
 }
 
+#map {
+    height: 400px;
+    width: 100%;
+    flex: 1;
+}
+
 header {
     text-align: center;
     margin-bottom: 30px;

@@ -1,6 +1,7 @@
 import { UtilClass } from "./utilClass.js";
 import { VegreferanseService } from "./vegrefService.js";
 const service = new VegreferanseService();
+service.setBaseUrl("https://nvdbapiles.test.atlas.vegvesen.no/");
 /**
  * Controller for handling operations related to Vegreferanse and Vegsystemreferanse.
  */
