@@ -114,6 +114,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('toggleMapBtn');
+    const mapDiv = document.getElementById('map');
+    if (!toggleBtn || !mapDiv) return;
+    toggleBtn.addEventListener('click', () => {
+        if (mapDiv.style.display === 'none') {
+            mapDiv.style.display = '';
+            toggleBtn.textContent = 'Skjul kart';
+        } else {
+            mapDiv.style.display = 'none';
+            toggleBtn.textContent = 'Vis kart';
+        }
+    });
+
+});
+
 // Handler function for vegreferanse search form submission
 async function handleVegrefSearch(event: Event) {
     event.preventDefault();
@@ -313,7 +329,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
             <td class="historic_532" style="display:none">${feature.veglenkeposisjon}</td>
             <td>${feature.fraDato}</td>
-            <td>${feature.tilDato}</td>const map = L.map('map');
+            <td>${feature.tilDato}</td>
             <td>${UtilClass.formatNumber(feature.relativPosisjon, 6)}@${feature.veglenkeid}</td>
             <td>${feature.koordinat}</td>
             <td>${feature.vegsystemreferanse}</td>
