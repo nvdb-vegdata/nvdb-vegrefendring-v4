@@ -11,17 +11,7 @@ export declare class VegrefController {
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    findPosisjonerByVegreferanse(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<{
-        vegreferanse: string;
-        fraDato: string;
-        tilDato: string;
-        veglenkeposisjon: string;
-        veglenkeid: number;
-        relativPosisjon: number;
-        beregnetVegreferanse: string;
-        koordinat: string;
-        vegsystemreferanse: string;
-    }[]>;
+    findPosisjonerByVegreferanse(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]>;
     /**
      * Finds positions by a given Vegreferanse and optional timestamp.
      * Returns an array of objects containing vegreferanse, dates, position info, coordinates, and system reference.
@@ -29,17 +19,7 @@ export declare class VegrefController {
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    findPosisjonerByVegreferanserAdvanced(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<{
-        vegreferanse: string;
-        fraDato: string;
-        tilDato: string;
-        veglenkeposisjon: string;
-        veglenkeid: number;
-        relativPosisjon: number;
-        beregnetVegreferanse: string;
-        koordinat: string;
-        vegsystemreferanse: string;
-    }[]>;
+    findPosisjonerByVegreferanserAdvanced(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]>;
     /**
      * Finds positions by a given road system reference (`vegsystemreferanse`) and optional timestamp.
      * Returns an array of objects containing road reference, dates, position info, coordinates, and system reference.
