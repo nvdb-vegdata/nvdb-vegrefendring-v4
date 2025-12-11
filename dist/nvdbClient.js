@@ -1,9 +1,13 @@
+// Default to production NVDB API URL
 let baseUrl = "https://nvdbapiles.atlas.vegvesen.no"; // PROD
+// Headers for NVDB API requests
+const NVDB_HEADERS = { "Accept": "application/json", "X-Client": "nvdb-vegref-client" };
+// Function to set a custom base URL for NVDB API
 export function setNvdbBaseUrl(url) {
     baseUrl = url;
 }
 export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
-    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/532";
     const params = new URLSearchParams({
         inkludergeometri: "ingen",
         inkluder: "egenskaper,lokasjon,metadata",
@@ -23,9 +27,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
@@ -42,7 +44,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
     return await response.json();
 };
 export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
-    const url = baseUrl + "/vegnett/api/v4/veg";
+    const url = baseUrl + "/veg";
     const params = new URLSearchParams({
         veglenkesekvens: `${position}@${veglenkesekvensid}`
     });
@@ -50,9 +52,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
@@ -61,7 +61,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
     return await response.json();
 };
 export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tidspunkt) => {
-    const url = baseUrl + "/vegnett/api/v4/veg";
+    const url = baseUrl + "/veg";
     const params = new URLSearchParams({
         vegsystemreferanse: `${vegsystemreferanse}`,
         ...(tidspunkt ? { tidspunkt: tidspunkt.toISOString().slice(0, 10) } : {})
@@ -70,9 +70,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
@@ -81,7 +79,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
     return await response.json();
 };
 export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, tidspunkt) => {
-    const url = baseUrl + "/vegnett/api/v4/veg";
+    const url = baseUrl + "/veg";
     const params = new URLSearchParams({
         veglenkesekvens: `${posisjon}@${veglenksekvensid}`,
         ...(tidspunkt ? { tidspunkt: tidspunkt.toISOString().slice(0, 10) } : {})
@@ -90,9 +88,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
@@ -101,7 +97,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
     return await response.json();
 };
 export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
-    const url = baseUrl + "/vegnett/api/v4/posisjon";
+    const url = baseUrl + "/posisjon";
     const params = new URLSearchParams({
         nord: `${nord}`,
         ost: `${ost}`,
@@ -111,9 +107,7 @@ export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
@@ -122,7 +116,7 @@ export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     return await response.json();
 };
 export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId, posisjon, tidspunkt) => {
-    const url = baseUrl + "/vegobjekter/api/v4/vegobjekter/532";
+    const url = baseUrl + "/vegobjekter/532";
     const params = new URLSearchParams({
         segmentering: "true",
         inkluder: "egenskaper,lokasjon,metadata",
@@ -135,9 +129,7 @@ export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId, posi
     const response = await fetch(`${url}?${params.toString()}`, {
         method: "GET",
         mode: 'cors',
-        headers: {
-            "Accept": "application/json"
-        }
+        headers: NVDB_HEADERS
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);

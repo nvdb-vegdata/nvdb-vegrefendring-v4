@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+// Initialize the map view and tile layer
 document.addEventListener('DOMContentLoaded', function () {
     map.setView([60.472, 8.4689], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
@@ -101,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleBtn.innerHTML = minimized ? '<span id="toggleIcon" style="font-size:1.2em;">▼</span>' : '<span id="toggleIcon" style="font-size:1.2em;">▲</span>';
     });
 });
+// Event listener for toggling map visibility
 document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggleMapBtn');
     const mapDiv = document.getElementById('map');
@@ -229,15 +231,18 @@ async function handlePosSearch(event) {
         displayResults(await vegrefController.findPosisjonerByCoordinates(northing, easting, tidspunkt));
     }
 }
+// Function to clear existing markers from the map
 function clearMarkers() {
     markers.forEach(marker => marker.remove());
     markers.length = 0;
 }
+// Function to show loading message
 function showLoading() {
     const elementById = document.getElementById('results');
     if (elementById)
         elementById.innerHTML = '<p>Søker...</p>';
 }
+// Function to display results in the results div and add markers to the map
 async function displayResults(result) {
     const resultsDiv = document.getElementById('results');
     clearMarkers();
@@ -324,6 +329,7 @@ async function displayResults(result) {
         resultsDiv.innerHTML = html;
     }
 }
+// Function to convert UTM33 coordinates to WGS84 latitude and longitude
 function convertUTM33ToWGS84LatLong(x, y) {
     let transformed = proj4(UTM33, WGS84, [x, y]);
     return {
@@ -331,6 +337,7 @@ function convertUTM33ToWGS84LatLong(x, y) {
         'lng': transformed[0] || 0
     };
 }
+// Function to display error messages
 function displayError(message) {
     document.getElementById('results').innerHTML = `<p style="color: red;">${message}</p>`;
 }
