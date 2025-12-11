@@ -197,6 +197,14 @@ export class UtilClass {
         return str;
     }
 
+
+    /**
+     * Returns a formatted vegsystem reference string with municipality info if applicable.
+     * If the vegsystem category is "E", "R", or "F", only the short form is returned.
+     * Otherwise, the municipality and short form are combined.
+     * @param posisjon The position object containing vegsystemreferanse and kommune.
+     * @returns A formatted string for the vegsystem reference.
+     */
     static getVegsysrefWithKommune(posisjon: Posisjon): string {
         if (!posisjon.vegsystemreferanse) {
             return "Ukjent vegsystemreferanse";
