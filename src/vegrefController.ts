@@ -18,7 +18,7 @@ export class VegrefController {
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    async findPosisjonerByVegreferanse(vegreferanse: Vegreferanse, tidspunkt?: Date) {
+    async findPosisjonerByVegreferanse(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]> {
         const historicVegobjekter = await service.findVegreferanse(vegreferanse, tidspunkt);
         var map = historicVegobjekter.objekter.map(async objekt => {
             const lenkeid = objekt.lokasjon.stedfestinger[0]?.veglenkesekvensid || -1;
@@ -46,7 +46,7 @@ export class VegrefController {
      * @param tidspunkt - Optional timestamp for historic lookup.
      * @returns Promise resolving to an array of position and reference objects.
      */
-    async findPosisjonerByVegreferanserAdvanced(vegreferanse: Vegreferanse, tidspunkt?: Date) {
+    async findPosisjonerByVegreferanserAdvanced(vegreferanse: Vegreferanse, tidspunkt?: Date): Promise<VegrefAndVegsystemreferanse[]> {
             const promises = (await service.findVegreferanse(vegreferanse, tidspunkt)).objekter.map(async objekt => {
                 const lenkeid = objekt.lokasjon.stedfestinger[0]?.veglenkesekvensid || -1;
                 const pos = UtilClass.finnRelativPosisjon(objekt, vegreferanse.meter, false)?.position || 0;

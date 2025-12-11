@@ -56,7 +56,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tids
     return await response.json() as HistoricVegobjektResponse;
 };
 
-export const fetchVegsystemReferanse = async (veglenkesekvensid: number, position: number) => {
+export const fetchVegsystemReferanse = async (veglenkesekvensid: number, position: number) : Promise<Posisjon> => {
 
     const url = baseUrl + "/veg";
 
