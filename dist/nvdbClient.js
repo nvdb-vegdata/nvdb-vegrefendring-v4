@@ -31,15 +31,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse, tidspunkt) => {
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {
-            objekter: [],
-            metadata: {
-                antallTreffTotalt: 0,
-                antallTreffPerSide: 0,
-                side: 0,
-                antallSider: 0
-            },
-        };
+        throw new Error(`Failed to fetch historic vegreferanse: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
@@ -56,7 +48,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid, position) => {
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {};
+        throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
@@ -74,7 +66,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {};
+        throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
@@ -92,7 +84,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {};
+        throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
@@ -111,7 +103,7 @@ export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {};
+        throw new Error(`Failed to fetch position by nord/ost: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
@@ -133,6 +125,7 @@ export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId, posi
     });
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
+        throw new Error(`Failed to fetch historic vegreferanse by position: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 };
