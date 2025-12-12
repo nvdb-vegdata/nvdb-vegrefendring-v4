@@ -82,42 +82,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+document.getElementById('searchType')?.addEventListener('change', function (e) {
+    const vegref = document.getElementById('vegrefSection');
+    const vegsysref = document.getElementById('vegsysrefSection');
+    const pos = document.getElementById('posSection');
+    const koordinat = document.getElementById('lenkeSection');
+    if (e && e.target instanceof HTMLSelectElement && vegref && vegsysref && pos && koordinat) {
+        if (e.target.value === 'vegref') {
+            vegref.style.display = '';
+            vegsysref.style.display = 'none';
+            pos.style.display = 'none';
+            koordinat.style.display = 'none';
+        }
+        else if (e.target.value === 'vegsysref') {
+            vegref.style.display = 'none';
+            vegsysref.style.display = '';
+            pos.style.display = 'none';
+            koordinat.style.display = 'none';
+        }
+        else if (e.target.value === 'koordinat') {
+            vegref.style.display = 'none';
+            vegsysref.style.display = 'none';
+            pos.style.display = '';
+            koordinat.style.display = 'none';
+        }
+        else if (e.target.value === 'lenke') {
+            vegref.style.display = 'none';
+            vegsysref.style.display = 'none';
+            pos.style.display = 'none';
+            koordinat.style.display = '';
+        }
+    }
+});
 // Initialize the map view and tile layer
 document.addEventListener('DOMContentLoaded', function () {
     map.setView([60.472, 8.4689], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
-});
-// Event listener for toggling search sections
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleBtn = document.getElementById('toggleSearchSections');
-    const searchSections = document.querySelector('.search-sections');
-    let minimized = false;
-    toggleBtn?.addEventListener('click', function () {
-        minimized = !minimized;
-        Array.from(searchSections?.children ?? []).forEach(child => {
-            if (child !== toggleBtn) {
-                child.style.display = minimized ? 'none' : '';
-            }
-        });
-        toggleBtn.innerHTML = minimized ? '<span id="toggleIcon" style="font-size:1.2em;">▼</span>' : '<span id="toggleIcon" style="font-size:1.2em;">▲</span>';
-    });
-});
-// Event listener for toggling map visibility
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleBtn = document.getElementById('toggleMapBtn');
-    const mapDiv = document.getElementById('map');
-    if (!toggleBtn || !mapDiv)
-        return;
-    toggleBtn.addEventListener('click', () => {
-        if (mapDiv.style.display === 'none') {
-            mapDiv.style.display = '';
-            toggleBtn.textContent = 'Skjul kart';
-        }
-        else {
-            mapDiv.style.display = 'none';
-            toggleBtn.textContent = 'Vis kart';
-        }
-    });
 });
 // Handler function for vegreferanse search form submission
 async function handleVegrefSearch(event) {

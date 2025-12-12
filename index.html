@@ -21,264 +21,281 @@
         <p style="font-size:1em; font-weight:bold; color:#d32f2f;">Merk! Dette er en betaversjon under testing</p>
     </header>
 
+    <main>
 
-    <div id="map-container">
-        <button id="toggleMapBtn" class="btn-secondary" style="margin-bottom:10px;">Skjul kart</button>
-        <div id="map"></div>
-    </div>
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div id="map" style="flex: 1; min-width: 400px; min-height: 500px;"></div>
+            <div class="search-sections" style="flex: 1; min-width: 400px;">
 
-
-    <div style="margin-bottom:15px;">
-        <label for="searchType">Velg søketype:</label>
-        <select id="searchType">
-            <option value="vegref">Søk på vegreferanse</option>
-            <option value="vegsysref">Søk på vegsystemreferanse</option>
-            <option value="koordinat">Søk på koordinat</option>
-            <option value="lenke">Søk på lenkeposisjon</option>
-        </select>
-    </div>
-
-
-    <div class="search-sections">
-        <button id="toggleSearchSections" class="btn-secondary" style="float:right; margin-bottom:10px;"
-                aria-label="Minimize">
-            <span id="toggleIcon" style="font-size:1.2em;">▲</span>
-        </button>
-        <section class="search-section" id="vegrefSection">
-            <h2>Søk på vegreferanse</h2>
-            <form id="vegrefForm" class="search-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vegref_fylke">Fylke *</label>
-                        <input type="number" id="vegref_fylke" name="fylke" value="8" min="1" max="99" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_kommune">Kommune</label>
-                        <input type="text" id="vegref_kommune" name="kommune" placeholder="00" maxlength="2">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_kat">Kategori *</label>
-                        <select id="vegref_kat" name="kat" required>
-                            <option value="">Velg kategori</option>
-                            <option value="E" selected>E - Europavei</option>
-                            <option value="R">R - Riksvei</option>
-                            <option value="F">F - Fylkesvei</option>
-                            <option value="K">K - Kommunal vei</option>
-                            <option value="P">P - Privat vei</option>
-                            <option value="S">S - Skogsbilvei</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="vegref_stat">Status</label>
-                        <select id="vegref_stat" name="stat">
-                            <option value="V" selected>V - Eksisterende vei</option>
-                            <option value="A">A - Arm</option>
-                            <option value="B">B - Beredskapsvei</option>
-                            <option value="E">E - Gang-/sykkelvei</option>
-                            <option value="G">G - Gangvei</option>
-                            <option value="H">H - Hovedvei</option>
-                            <option value="M">M - Rampe</option>
-                            <option value="P">P - Proposed</option>
-                            <option value="Q">Q - Rundkjøring</option>
-                            <option value="S">S - Sykkelvei</option>
-                            <option value="T">T - Traktorvei</option>
-                            <option value="U">U - Under bygging</option>
-                            <option value="W">W - Vinterstengd</option>
-                            <option value="X">X - Ikke eksisterende</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_vegnr">Vegnummer *</label>
-                        <input type="number" id="vegref_vegnr" name="vegnr" value="18" min="1" max="99999" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_hp">Hovedparsell</label>
-                        <input type="number" id="vegref_hp" name="hp" value="1" min="1" max="999">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_meter">Meter</label>
-                        <input type="number" id="vegref_meter" name="meter" value="0" min="0" max="99999">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegref_dato">Dato (YYYY-MM-DD)</label>
-                        <input type="text" id="vegref_dato" name="dato" placeholder="YYYY-MM-DD"
-                               pattern="\d{4}-\d{2}-\d{2}">
-                    </div>
-                </div>
-                <div style="margin:25px 5px 1px 5px;">
-                    <label class="switch">
-                        <input type="checkbox" id="avansert_vegreg_sok" name="avansert_vegref_sok" value="off">
-                    </label>
-                    <span title="Videresøke på stedfestingen til de historiske vegobjektene søket fant og hent ut alle historiske vegobekt som har vært stedfestet på disse lenkeposisjonene."
-                    >Videresøk på stedfestingen til historisk vegobjekt</span>
-                </div>
-                <button type="submit" class="btn-primary">Søk vegreferanse</button>
-                <button type="reset" class="btn-secondary">Nullstill skjema</button>
-            </form>
-        </section>
-        <section class="search-section" id="vegsysrefSection" style="display:none">
-            <h2>Søk på vegsystemreferanse</h2>
-            <form id="vegsysrefForm" class="search-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vegsysref_fylke">Fylke</label>
-                        <input type="number" id="vegsysref_fylke" name="fylke" min="1" max="99">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_kommune">Kommune</label>
-                        <input type="text" id="vegsysref_kommune" name="kommune" placeholder="00" maxlength="2">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_kat">Kategori *</label>
-                        <select id="vegsysref_kat" name="kat" required>
-                            <option value="">Velg kategori</option>
-                            <option value="E" selected>E - Europavei</option>
-                            <option value="R">R - Riksvei</option>
-                            <option value="F">F - Fylkesvei</option>
-                            <option value="K">K - Kommunal vei</option>
-                            <option value="P">P - Privat vei</option>
-                            <option value="S">S - Skogsbilvei</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vegsysref_stat">Status</label>
-                        <select id="vegsysref_stat" name="stat">
-                            <option value="V" selected>V - Eksisterende vei</option>
-                            <option value="A">A - Arm</option>
-                            <option value="B">B - Beredskapsvei</option>
-                            <option value="E">E - Gang-/sykkelvei</option>
-                            <option value="G">G - Gangvei</option>
-                            <option value="H">H - Hovedvei</option>
-                            <option value="M">M - Rampe</option>
-                            <option value="P">P - Proposed</option>
-                            <option value="Q">Q - Rundkjøring</option>
-                            <option value="S">S - Sykkelvei</option>
-                            <option value="T">T - Traktorvei</option>
-                            <option value="U">U - Under bygging</option>
-                            <option value="W">W - Vinterstengd</option>
-                            <option value="X">X - Ikke eksisterende</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_vegnr">Vegnummer *</label>
-                        <input type="number" id="vegsysref_vegnr" name="vegnr" value="18" min="1" max="99999" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_strekning">Strekning</label>
-                        <input type="number" id="vegsysref_strekning" name="hp" value="1" min="1" max="999">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_delstrekning">Delstrekning</label>
-                        <input type="number" id="vegsysref_delstrekning" name="hp" value="1" min="1" max="999">
-                    </div>
-                    <div class="form-group">
-                        <label for="vegsysref_meter">Meter</label>
-                        <input type="number" id="vegsysref_meter" name="meter" value="0" min="0" max="99999">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="extraType">Kryssystem / Sideanlegg</label>
-                    <select id="extraType" name="extraType">
-                        <option value="">Ingen</option>
-                        <option value="sideanlegg">Sideanlegg</option>
-                        <option value="kryssystem">Kryssystem</option>
+                <div style="margin-bottom:15px;">
+                    <label for="searchType">Velg søketype:</label>
+                    <select id="searchType">
+                        <option value="vegref">Søk på vegreferanse</option>
+                        <option value="vegsysref">Søk på vegsystemreferanse</option>
+                        <option value="koordinat">Søk på koordinat</option>
+                        <option value="lenke">Søk på lenkeposisjon</option>
                     </select>
                 </div>
-                <div class="form-group" id="sideanleggsdel-group" style="display:none;">
-                    <label for="sideanleggsdel">Sideanleggsdel</label>
-                    <input type="number" id="sideanleggsdel" name="sideanleggsdel" placeholder="Sideanleggsdel" min="1">
-                    <label for="sideanleggsdel">Sideanlegg meter</label>
-                    <input type="number" id="sideanleggsdel_meter" name="sideanleggsdel_meter"
-                           placeholder="Sideanleggsdel meter">
+
+
+                <div class="search-sections">
+
+                    <section class="search-section" id="vegrefSection">
+                        <h2>Søk på vegreferanse</h2>
+                        <form id="vegrefForm" class="search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="vegref_fylke">Fylke *</label>
+                                    <input type="number" id="vegref_fylke" name="fylke" value="8" min="1" max="99"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_kommune">Kommune</label>
+                                    <input type="text" id="vegref_kommune" name="kommune" placeholder="00"
+                                           maxlength="2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_kat">Kategori *</label>
+                                    <select id="vegref_kat" name="kat" required>
+                                        <option value="">Velg kategori</option>
+                                        <option value="E" selected>E - Europavei</option>
+                                        <option value="R">R - Riksvei</option>
+                                        <option value="F">F - Fylkesvei</option>
+                                        <option value="K">K - Kommunal vei</option>
+                                        <option value="P">P - Privat vei</option>
+                                        <option value="S">S - Skogsbilvei</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="vegref_stat">Status</label>
+                                    <select id="vegref_stat" name="stat">
+                                        <option value="V" selected>V - Eksisterende vei</option>
+                                        <option value="A">A - Arm</option>
+                                        <option value="B">B - Beredskapsvei</option>
+                                        <option value="E">E - Gang-/sykkelvei</option>
+                                        <option value="G">G - Gangvei</option>
+                                        <option value="H">H - Hovedvei</option>
+                                        <option value="M">M - Rampe</option>
+                                        <option value="P">P - Proposed</option>
+                                        <option value="Q">Q - Rundkjøring</option>
+                                        <option value="S">S - Sykkelvei</option>
+                                        <option value="T">T - Traktorvei</option>
+                                        <option value="U">U - Under bygging</option>
+                                        <option value="W">W - Vinterstengd</option>
+                                        <option value="X">X - Ikke eksisterende</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_vegnr">Vegnummer *</label>
+                                    <input type="number" id="vegref_vegnr" name="vegnr" value="18" min="1" max="99999"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_hp">Hovedparsell</label>
+                                    <input type="number" id="vegref_hp" name="hp" value="1" min="1" max="999">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_meter">Meter</label>
+                                    <input type="number" id="vegref_meter" name="meter" value="0" min="0" max="99999">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegref_dato">Dato (YYYY-MM-DD)</label>
+                                    <input type="text" id="vegref_dato" name="dato" placeholder="YYYY-MM-DD"
+                                           pattern="\d{4}-\d{2}-\d{2}">
+                                </div>
+                            </div>
+                            <div style="margin:25px 5px 1px 5px;">
+                                <label class="switch">
+                                    <input type="checkbox" id="avansert_vegreg_sok" name="avansert_vegref_sok"
+                                           value="off">
+                                </label>
+                                <span title="Videresøke på stedfestingen til de historiske vegobjektene søket fant og hent ut alle historiske vegobekt som har vært stedfestet på disse lenkeposisjonene."
+                                >Videresøk på stedfestingen til historisk vegobjekt</span>
+                            </div>
+                            <div class="form-row">
+                                <button type="submit" class="btn-primary">Søk vegreferanse</button>
+                                <button type="reset" class="btn-secondary">Nullstill skjema</button>
+                            </div>
+                        </form>
+                    </section>
+                    <section class="search-section" id="vegsysrefSection" style="display:none">
+                        <h2>Søk på vegsystemreferanse</h2>
+                        <form id="vegsysrefForm" class="search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="vegsysref_fylke">Fylke</label>
+                                    <input type="number" id="vegsysref_fylke" name="fylke" min="1" max="99">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_kommune">Kommune</label>
+                                    <input type="text" id="vegsysref_kommune" name="kommune" placeholder="00"
+                                           maxlength="2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_kat">Kategori *</label>
+                                    <select id="vegsysref_kat" name="kat" required>
+                                        <option value="">Velg kategori</option>
+                                        <option value="E" selected>E - Europavei</option>
+                                        <option value="R">R - Riksvei</option>
+                                        <option value="F">F - Fylkesvei</option>
+                                        <option value="K">K - Kommunal vei</option>
+                                        <option value="P">P - Privat vei</option>
+                                        <option value="S">S - Skogsbilvei</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="vegsysref_stat">Status</label>
+                                    <select id="vegsysref_stat" name="stat">
+                                        <option value="V" selected>V - Eksisterende vei</option>
+                                        <option value="A">A - Arm</option>
+                                        <option value="B">B - Beredskapsvei</option>
+                                        <option value="E">E - Gang-/sykkelvei</option>
+                                        <option value="G">G - Gangvei</option>
+                                        <option value="H">H - Hovedvei</option>
+                                        <option value="M">M - Rampe</option>
+                                        <option value="P">P - Proposed</option>
+                                        <option value="Q">Q - Rundkjøring</option>
+                                        <option value="S">S - Sykkelvei</option>
+                                        <option value="T">T - Traktorvei</option>
+                                        <option value="U">U - Under bygging</option>
+                                        <option value="W">W - Vinterstengd</option>
+                                        <option value="X">X - Ikke eksisterende</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_vegnr">Vegnummer *</label>
+                                    <input type="number" id="vegsysref_vegnr" name="vegnr" value="18" min="1"
+                                           max="99999"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_strekning">Strekning</label>
+                                    <input type="number" id="vegsysref_strekning" name="hp" value="1" min="1" max="999">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_delstrekning">Delstrekning</label>
+                                    <input type="number" id="vegsysref_delstrekning" name="hp" value="1" min="1"
+                                           max="999">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vegsysref_meter">Meter</label>
+                                    <input type="number" id="vegsysref_meter" name="meter" value="0" min="0"
+                                           max="99999">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="extraType">Kryssystem / Sideanlegg</label>
+                                    <select id="extraType" name="extraType">
+                                        <option value="">Ingen</option>
+                                        <option value="sideanlegg">Sideanlegg</option>
+                                        <option value="kryssystem">Kryssystem</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="sideanleggsdel-group" style="display:none;">
+                                    <label for="sideanleggsdel">Sideanleggsdel</label>
+                                    <input type="number" id="sideanleggsdel" name="sideanleggsdel"
+                                           placeholder="Sideanleggsdel" min="1">
+                                    <label for="sideanleggsdel">Sideanlegg meter</label>
+                                    <input type="number" id="sideanleggsdel_meter" name="sideanleggsdel_meter"
+                                           placeholder="Sideanleggsdel meter">
+                                </div>
+                                <div class="form-group" id="kryssdel-group" style="display:none;">
+                                    <label for="kryssdel">Kryssdel</label>
+                                    <input type="number" id="kryssdel" name="kryssdel" placeholder="Kryssdel" min="1">
+                                    <label for="kryssdel">Kryssdel meter</label>
+                                    <input type="number" id="kryssdel_meter" name="kryssdel_meter"
+                                           placeholder="Kryssdel meter">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="vegsysref_dato">Dato (YYYY-MM-DD)</label>
+                                    <input type="text" id="vegsysref_dato" name="dato" placeholder="YYYY-MM-DD"
+                                           pattern="\d{4}-\d{2}-\d{2}">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button type="submit" class="btn-primary">Søk vegsystemreferanse</button>
+                                <button type="reset" class="btn-secondary">Nullstill skjema</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section class="search-section" id="posSection" style="display:none">
+                        <h2>Søk på koordinater</h2>
+                        <form id="posForm" class="search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="easting">Øst-koordinat *</label>
+                                    <input type="number" id="easting" value="205060.17" name="easting" step="any"
+                                           required
+                                           placeholder="f.eks. 262650">
+                                </div>
+                                <div class="form-group">
+                                    <label for="northing">Nord-koordinat *</label>
+                                    <input type="number" id="northing" value="6560102.44" name="northing" step="any"
+                                           required
+                                           placeholder="f.eks. 6651180">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="posForm_dato">Dato (YYYY-MM-DD)</label>
+                                    <input type="text" id="posForm_dato" name="dato" placeholder="YYYY-MM-DD"
+                                           pattern="\d{4}-\d{2}-\d{2}">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary">Søk på koordinater</button>
+                            <button type="reset" class="btn-secondary">Nullstill skjema</button>
+                        </form>
+                    </section>
+
+                    <section class="search-section" id="lenkeSection" style="display:none">
+                        <h2>Søk på lenkesekvensId@posisjon</h2>
+                        <form id="lenkeForm" class="search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="posisjon">Posisjon *</label>
+                                    <input type="number" id="posisjon" name="posisjon" min="0" max="1"
+                                           value="0.86004074"
+                                           step="any"
+                                           required placeholder="f.eks. 0.3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lenkesekvensId">LenkesekvensId *</label>
+                                    <input type="number" id="lenkesekvensId" name="lenkesekvensId" value="521066"
+                                           required
+                                           placeholder="f.eks. 123456">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lenkeForm_dato">Dato (YYYY-MM-DD)</label>
+                                    <input type="text" id="lenkeForm_dato" name="dato" placeholder="YYYY-MM-DD"
+                                           pattern="\d{4}-\d{2}-\d{2}">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary">Søk på lenkesekvensId og posisjon</button>
+                            <button type="reset" class="btn-secondary">Nullstill skjema</button>
+                        </form>
+                    </section>
                 </div>
-                <div class="form-group" id="kryssdel-group" style="display:none;">
-                    <label for="kryssdel">Kryssdel</label>
-                    <input type="number" id="kryssdel" name="kryssdel" placeholder="Kryssdel" min="1">
-                    <label for="kryssdel">Kryssdel meter</label>
-                    <input type="number" id="kryssdel_meter" name="kryssdel_meter" placeholder="Kryssdel meter">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vegsysref_dato">Dato (YYYY-MM-DD)</label>
-                        <input type="text" id="vegsysref_dato" name="dato" placeholder="YYYY-MM-DD"
-                               pattern="\d{4}-\d{2}-\d{2}">
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary">Søk vegsystemreferanse</button>
-                <button type="reset" class="btn-secondary">Nullstill skjema</button>
-            </form>
+            </div>
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label class="switch">
+                <input type="checkbox" id="vis532_switch" name="vis532" value="off">
+                <span class="slider"></span>
+            </label>
+            <span style="margin-left:10px;">Vis informasjon om historisk vegobjekttype 532 i resultater</span>
+        </div>
+
+        <section id="results" class="results-section">
+            <!-- Resultater vises her -->
         </section>
-
-        <section class="search-section" id="posSection" style="display:none">
-            <h2>Søk på koordinater</h2>
-            <form id="posForm" class="search-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="easting">Øst-koordinat *</label>
-                        <input type="number" id="easting" value="205060.17" name="easting" step="any" required
-                               placeholder="f.eks. 262650">
-                    </div>
-                    <div class="form-group">
-                        <label for="northing">Nord-koordinat *</label>
-                        <input type="number" id="northing" value="6560102.44" name="northing" step="any" required
-                               placeholder="f.eks. 6651180">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="posForm_dato">Dato (YYYY-MM-DD)</label>
-                        <input type="text" id="posForm_dato" name="dato" placeholder="YYYY-MM-DD"
-                               pattern="\d{4}-\d{2}-\d{2}">
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary">Søk på koordinater</button>
-                <button type="reset" class="btn-secondary">Nullstill skjema</button>
-            </form>
-        </section>
-
-        <section class="search-section" id="lenkeSection" style="display:none">
-            <h2>Søk på lenkesekvensId@posisjon</h2>
-            <form id="lenkeForm" class="search-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="posisjon">Posisjon *</label>
-                        <input type="number" id="posisjon" name="posisjon" min="0" max="1" value="0.86004074"
-                               step="any"
-                               required placeholder="f.eks. 0.3">
-                    </div>
-                    <div class="form-group">
-                        <label for="lenkesekvensId">LenkesekvensId *</label>
-                        <input type="number" id="lenkesekvensId" name="lenkesekvensId" value="521066" required
-                               placeholder="f.eks. 123456">
-                    </div>
-                    <div class="form-group">
-                        <label for="lenkeForm_dato">Dato (YYYY-MM-DD)</label>
-                        <input type="text" id="lenkeForm_dato" name="dato" placeholder="YYYY-MM-DD"
-                               pattern="\d{4}-\d{2}-\d{2}">
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary">Søk på lenkesekvensId og posisjon</button>
-                <button type="reset" class="btn-secondary">Nullstill skjema</button>
-            </form>
-        </section>
-    </div>
-
-    <div style="margin-bottom:15px;">
-        <label class="switch">
-            <input type="checkbox" id="vis532_switch" name="vis532" value="off">
-            <span class="slider"></span>
-        </label>
-        <span style="margin-left:10px;">Vis informasjon om historisk vegobjekttype 532 i resultater</span>
-    </div>
-
-    <section id="results" class="results-section">
-        <!-- Resultater vises her -->
-    </section>
     </main>
 </div>
 
@@ -294,35 +311,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
 
 <script type="module" src="dist/app.js"></script>
-<script>
-    document.getElementById('searchType').addEventListener('change', function (e) {
-        const vegref = document.getElementById('vegrefSection');
-        const vegsysref = document.getElementById('vegsysrefSection');
-        const pos = document.getElementById('posSection');
-        const koordinat = document.getElementById('lenkeSection');
-        if (e.target.value === 'vegref') {
-            vegref.style.display = '';
-            vegsysref.style.display = 'none';
-            pos.style.display = 'none';
-            koordinat.style.display = 'none';
-        } else if (e.target.value === 'vegsysref') {
-            vegref.style.display = 'none';
-            vegsysref.style.display = '';
-            pos.style.display = 'none';
-            koordinat.style.display = 'none';
-        } else if (e.target.value === 'koordinat') {
-            vegref.style.display = 'none';
-            vegsysref.style.display = 'none';
-            pos.style.display = '';
-            koordinat.style.display = 'none';
-        } else if (e.target.value === 'lenke') {
-            vegref.style.display = 'none';
-            vegsysref.style.display = 'none';
-            pos.style.display = 'none';
-            koordinat.style.display = '';
-        }
-    });
-</script>
 
 </body>
 </html>
