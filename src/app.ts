@@ -144,21 +144,29 @@ async function handleVegrefSearch(event: Event) {
         ? new Date((document.getElementById('vegref_dato') as HTMLInputElement).value)
         : undefined;
 
-    if (fylke && kat && vegnr) {
-        showLoading();
-        var vegreferanse = Vegreferanse.createFromString(""
-            + (fylke ? UtilClass.padNumber(fylke, 2) : '00')
-            + (kommune ? UtilClass.padNumber(kommune, 2) : '00')
-            + kat
-            + stat
-            + vegnr
-            + "hp" + hp
-            + "m" + meter);
+    try {
+        if (fylke && kat && vegnr) {
+            showLoading();
+            var vegreferanse = Vegreferanse.createFromString(""
+                + (fylke ? UtilClass.padNumber(fylke, 2) : '00')
+                + (kommune ? UtilClass.padNumber(kommune, 2) : '00')
+                + kat
+                + stat
+                + vegnr
+                + "hp" + hp
+                + "m" + meter);
 
-        if (((document.getElementById("avansert_vegreg_sok") as HTMLInputElement).checked)) {
-            displayResults(await vegrefController.findPosisjonerByVegreferanserAdvanced(vegreferanse, tidspunkt));
+            if (((document.getElementById("avansert_vegreg_sok") as HTMLInputElement).checked)) {
+                displayResults(await vegrefController.findPosisjonerByVegreferanserAdvanced(vegreferanse, tidspunkt));
+            } else {
+                displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+            }
+        }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            displayError('Feil ved søk på vegreferanse: ' + error.message);
         } else {
-            displayResults(await vegrefController.findPosisjonerByVegreferanse(vegreferanse, tidspunkt));
+            displayError('Feil ved søk på vegreferanse.');
         }
     }
 }
@@ -204,41 +212,49 @@ async function handleVegsysrefSearch(event: Event) {
         : undefined;
 
 
-    showLoading();
-    var vegsystemreferanse = ""
-        + (fylke ? UtilClass.padNumber(fylke, 2) : "")
-        + (kommune ? UtilClass.padNumber(kommune, 2) : "")
-        + kat
-        + stat
-        + vegnr
-        + "s"
-        + strekning.toString()
-        + "d"
-        + delstrekning.toString()
-        + "m"
-        + meter.toString();
+    try {
+        showLoading();
+        var vegsystemreferanse = ""
+            + (fylke ? UtilClass.padNumber(fylke, 2) : "")
+            + (kommune ? UtilClass.padNumber(kommune, 2) : "")
+            + kat
+            + stat
+            + vegnr
+            + "s"
+            + strekning.toString()
+            + "d"
+            + delstrekning.toString()
+            + "m"
+            + meter.toString();
 
 
-    // Ekstra type
-    const extraType = (document.getElementById('extraType') as HTMLSelectElement)?.value;
+        // Ekstra type
+        const extraType = (document.getElementById('extraType') as HTMLSelectElement)?.value;
 
-    // Sideanlegg
-    const sideanleggsdel = parseInt((document.getElementById('sideanleggsdel') as HTMLInputElement)?.value || '0');
-    const sideanleggsdel_meter = parseInt((document.getElementById('sideanleggsdel_meter') as HTMLInputElement)?.value || '0');
+        // Sideanlegg
+        const sideanleggsdel = parseInt((document.getElementById('sideanleggsdel') as HTMLInputElement)?.value || '0');
+        const sideanleggsdel_meter = parseInt((document.getElementById('sideanleggsdel_meter') as HTMLInputElement)?.value || '0');
 
-    // Kryssdel
-    const kryssdel = parseInt((document.getElementById('kryssdel') as HTMLInputElement)?.value || '0');
-    const kryssdel_meter = parseInt((document.getElementById('kryssdel_meter') as HTMLInputElement)?.value || '0');
+        // Kryssdel
+        const kryssdel = parseInt((document.getElementById('kryssdel') as HTMLInputElement)?.value || '0');
+        const kryssdel_meter = parseInt((document.getElementById('kryssdel_meter') as HTMLInputElement)?.value || '0');
 
-    if (extraType !== "Ingen") {
-        if (extraType == "sideanlegg" && sideanleggsdel > 0) {
-            vegsystemreferanse += "sd" + sideanleggsdel.toString() + "m" + sideanleggsdel_meter.toString();
-        } else if (kryssdel > 0) {
-            vegsystemreferanse += "kd" + kryssdel.toString() + "m" + kryssdel_meter.toString();
+        if (extraType !== "Ingen") {
+            if (extraType == "sideanlegg" && sideanleggsdel > 0) {
+                vegsystemreferanse += "sd" + sideanleggsdel.toString() + "m" + sideanleggsdel_meter.toString();
+            } else if (kryssdel > 0) {
+                vegsystemreferanse += "kd" + kryssdel.toString() + "m" + kryssdel_meter.toString();
+            }
+        }
+
+        displayResults(await vegrefController.findPosisjonerByVegsystemreferanse(vegsystemreferanse, tidspunkt));
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            displayError('Feil ved søk på vegsystemreferanse: ' + error.message);
+        } else {
+            displayError('Feil ved søk på vegsystemreferanse.');
         }
     }
-
-    displayResults(await vegrefController.findPosisjonerByVegsystemreferanse(vegsystemreferanse, tidspunkt));
 }
 
 // Handler function for position search form submission
@@ -253,8 +269,16 @@ async function handlePosSearch(event: Event) {
 
 
     if (easting && northing) {
-        showLoading();
-        displayResults(await vegrefController.findPosisjonerByCoordinates(northing, easting, tidspunkt));
+        try {
+            showLoading();
+            displayResults(await vegrefController.findPosisjonerByCoordinates(northing, easting, tidspunkt));
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                displayError('Feil ved søk på posisjon: ' + error.message);
+            } else {
+                displayError('Feil ved søk på posisjon.');
+            }
+        }
     }
 }
 

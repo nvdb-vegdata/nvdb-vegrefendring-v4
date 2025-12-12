@@ -42,15 +42,7 @@ export const fetchHistoricVegreferanse = async (vegreferanse: Vegreferanse, tids
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {
-            objekter: [],
-            metadata: {
-                antallTreffTotalt: 0,
-                antallTreffPerSide: 0,
-                side: 0,
-                antallSider: 0
-            },
-        } as HistoricVegobjektResponse;
+        throw new Error(`Failed to fetch historic vegreferanse: ${response.status} ${response.statusText}`);
     }
 
     return await response.json() as HistoricVegobjektResponse;
@@ -74,7 +66,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid: number, positio
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return undefined;
+        throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
     return await response.json() as Posisjon;
 };
@@ -99,7 +91,7 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse: Stri
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {} as Posisjon;
+        throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
     return await response.json() as Posisjon;
 };
@@ -124,7 +116,7 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid: number, pos
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {} as Posisjon;
+        throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
     }
     return await response.json() as Posisjon;
 };
@@ -150,7 +142,7 @@ export const fetchPositionByNordOst = async (nord: number, ost: number, tidspunk
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return {} as Posisjon[];
+        throw new Error(`Failed to fetch position by nord/ost: ${response.status} ${response.statusText}`);
     }
     return await response.json() as Posisjon[];
 };
@@ -178,6 +170,7 @@ export const fetchHistoricVegreferanseByPosition = async (veglenksekvensId : num
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
+        throw new Error(`Failed to fetch historic vegreferanse by position: ${response.status} ${response.statusText}`);
     }
     return await response.json() as HistoricVegobjektResponse;
 }
