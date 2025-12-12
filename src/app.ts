@@ -194,7 +194,7 @@ async function handleVegsysrefSearch(event: Event) {
     const fylke = parseInt((document.getElementById('vegsysref_fylke') as HTMLInputElement)?.value) || undefined;
     const kommune = parseInt((document.getElementById('vegsysref_kommune') as HTMLInputElement)?.value) || undefined;
     const kat = (document.getElementById('vegsysref_kat') as HTMLInputElement)?.value || 'E';
-    const stat = (document.getElementById('vegsysref_stat') as HTMLInputElement)?.value || 'V';
+    const stat = (document.getElementById('vegsysref_fase') as HTMLInputElement)?.value || 'V';
     const vegnr = parseInt((document.getElementById('vegsysref_vegnr') as HTMLInputElement)?.value || '0');
     const strekning = parseInt((document.getElementById('vegsysref_strekning') as HTMLInputElement)?.value || '1');
     const delstrekning = parseInt((document.getElementById('vegsysref_delstrekning') as HTMLInputElement)?.value || '1');
