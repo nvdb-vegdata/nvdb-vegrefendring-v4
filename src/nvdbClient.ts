@@ -74,7 +74,7 @@ export const fetchVegsystemReferanse = async (veglenkesekvensid: number, positio
 
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
-        return undefined;
+        return {} as Posisjon;
     }
     return await response.json() as Posisjon;
 };
