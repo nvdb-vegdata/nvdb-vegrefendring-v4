@@ -86,6 +86,8 @@
                                         <option value="X">X - Ikke eksisterende</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group">
                                     <label for="vegref_vegnr">Vegnummer *</label>
                                     <input type="number" id="vegref_vegnr" name="vegnr" value="18" min="1" max="99999"
@@ -99,12 +101,11 @@
                                     <label for="vegref_meter">Meter</label>
                                     <input type="number" id="vegref_meter" name="meter" value="0" min="0" max="99999">
                                 </div>
-                                <div class="form-group">
-                                    <label for="vegref_dato">Dato (YYYY-MM-DD)</label>
-                                    <input type="text" id="vegref_dato" name="dato" placeholder="YYYY-MM-DD"
-                                           pattern="\d{4}-\d{2}-\d{2}">
-                                </div>
                             </div>
+                                <div class="form-group">
+                                    <label for="vegref_dato">Dato (Vegreferanse fram til 31-10-2022)</label>
+                                    <input type="date" id="vegref_dato" name="dato" max="2022-10-31">
+                                </div>
                             <div style="margin:25px 5px 1px 5px;">
                                 <label class="switch">
                                     <input type="checkbox" id="avansert_vegreg_sok" name="avansert_vegref_sok"
@@ -203,9 +204,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="vegsysref_dato">Dato (YYYY-MM-DD)</label>
-                                    <input type="text" id="vegsysref_dato" name="dato" placeholder="YYYY-MM-DD"
-                                           pattern="\d{4}-\d{2}-\d{2}">
+                                    <label for="vegsysref_dato">Dato (Vegsystemreferanse startet i november 2019)</label>
+                                    <input type="date" id="vegsysref_dato" name="dato">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -234,9 +234,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="posForm_dato">Dato (YYYY-MM-DD)</label>
-                                    <input type="text" id="posForm_dato" name="dato" placeholder="YYYY-MM-DD"
-                                           pattern="\d{4}-\d{2}-\d{2}">
+                                    <label for="posForm_dato">Dato</label>
+                                    <input type="date" id="posForm_dato" name="dato">
                                 </div>
                             </div>
                             <button type="submit" class="btn-primary">Søk på koordinater</button>
@@ -262,9 +261,8 @@
                                            placeholder="f.eks. 123456">
                                 </div>
                                 <div class="form-group">
-                                    <label for="lenkeForm_dato">Dato (YYYY-MM-DD)</label>
-                                    <input type="text" id="lenkeForm_dato" name="dato" placeholder="YYYY-MM-DD"
-                                           pattern="\d{4}-\d{2}-\d{2}">
+                                    <label for="lenkeForm_dato">Dato</label>
+                                    <input type="date" id="lenkeForm_dato" name="dato">
                                 </div>
                             </div>
                             <button type="submit" class="btn-primary">Søk på lenkesekvensId og posisjon</button>
