@@ -179,7 +179,7 @@ async function handleVegsysrefSearch(event) {
     const fylke = parseInt(document.getElementById('vegsysref_fylke')?.value) || undefined;
     const kommune = parseInt(document.getElementById('vegsysref_kommune')?.value) || undefined;
     const kat = document.getElementById('vegsysref_kat')?.value || 'E';
-    const stat = document.getElementById('vegsysref_stat')?.value || 'V';
+    const stat = document.getElementById('vegsysref_fase')?.value || 'V';
     const vegnr = parseInt(document.getElementById('vegsysref_vegnr')?.value || '0');
     const strekning = parseInt(document.getElementById('vegsysref_strekning')?.value || '1');
     const delstrekning = parseInt(document.getElementById('vegsysref_delstrekning')?.value || '1');
