@@ -2,7 +2,14 @@
 Viser tidsutvikling av en vegreferanse-verdi i tid og rom. 
 
 ## Kjøre og utvikle lokalt:
-```npn run dev``` og klikk på lenken som vises i terminalen som sier nvdb-vegrefendring-v4.
+
+### Installer dependencies
+```npm install```
+
+### Kjøre lokalt
+```npm run dev```    
+og klikk på lenken som vises i terminalen som sier noe sånt som "http://localhost:5173/nvdb-vegrefendring-v4/
+".
 
 
 ## Deploye til github pages
