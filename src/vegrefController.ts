@@ -124,7 +124,7 @@ export class VegrefController {
             const posisjon = await service.findVegsystemReferanseByLenkeposisjon(linkid, position, tidspunkt);
 
             if (!posisjon.veglenkesekvens) {
-                throw new Error("Veglenkesekvens ikke funnet for lenkeposisjon");
+                return {} as VegrefAndVegsystemreferanse;
             }
             return {
                 vegreferanse: "" + vegref,
