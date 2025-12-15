@@ -2,10 +2,10 @@ import {Vegreferanse} from "./vegreferanse.js";
 import type {VegrefAndVegsystemreferanse} from "./nvdbTypes.js";
 import {VegrefController} from "./vegrefController.js";
 import {UtilClass} from "./utilClass.js";
-// import * as Terraformer from 'terraformer';
-// import * as L from 'leaflet';
-// import proj4 from 'proj4';
-// import 'terraformer-wkt-parser';
+import * as  WKT  from 'terraformer-wkt-parser';
+import * as L from 'leaflet';
+import proj4 from 'proj4';
+import 'terraformer-wkt-parser';
 
 // Define UTM33 and WGS84 projections
 const UTM33 = '+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs';
@@ -344,10 +344,10 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                     latlng = {lat: 0, lng: 0};
                     feature.koordinat = "Ukjent koordinat";
                 } else {
-                    const geom = Terraformer.WKT.parse(feature.koordinat);
+                    const geom = WKT.parse(feature.koordinat);
                     if (geom.type === 'Point') {
                         const [x, y] = geom.coordinates;
-                        latlng = convertUTM33ToWGS84LatLong(x, y);
+                        latlng = convertUTM33ToWGS84LatLong(x as number, y as number);
                         // Check if a marker already exists at this position
                         const existingMarker = markers.find(m => {
                             const pos = m.getLatLng();
