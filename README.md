@@ -6,8 +6,10 @@ Viser tidsutvikling av en vegreferanse-verdi i tid og rom.
 
 
 ## Deploye til github pages
-Kompiler opp med:   ```npm run build ```.
-Deploy til github pages  med:   ```npm run build ```.
+
+### Kompiler od deploy
+```npm run build ```.    
+```npm run deploy ```.
 
 Deploy pusher til github pages til branchen "gh-pages".
 
