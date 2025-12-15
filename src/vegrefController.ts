@@ -124,7 +124,17 @@ export class VegrefController {
             const posisjon = await service.findVegsystemReferanseByLenkeposisjon(linkid, position, tidspunkt);
 
             if (!posisjon.veglenkesekvens) {
-                return {} as VegrefAndVegsystemreferanse;
+                return {
+                    vegreferanse: "" + vegref,
+                    fraDato: "" + feature.metadata.startdato,
+                    tilDato: "" + feature.metadata.sluttdato,
+                    veglenkeposisjon: "" + stedfesting?.startposisjon + "-" + stedfesting?.sluttposisjon + "@" + stedfesting?.veglenkesekvensid,
+                    veglenkeid: linkid,
+                    relativPosisjon: position,
+                    beregnetVegreferanse: "" + UtilClass.toVegreferanseWithMeter(feature, UtilClass.finnRelativMeter(feature, position || 0) || 0),
+                    koordinat: "",
+                    vegsystemreferanse: "Ukjent vegsystemreferanse"
+                } as VegrefAndVegsystemreferanse;
             }
             return {
                 vegreferanse: "" + vegref,
