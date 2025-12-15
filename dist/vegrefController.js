@@ -114,7 +114,7 @@ export class VegrefController {
             const stedfesting = feature.lokasjon.stedfestinger[0];
             const posisjon = await service.findVegsystemReferanseByLenkeposisjon(linkid, position, tidspunkt);
             if (!posisjon.veglenkesekvens) {
-                throw new Error("Veglenkesekvens ikke funnet for lenkeposisjon");
+                return {};
             }
             return {
                 vegreferanse: "" + vegref,
