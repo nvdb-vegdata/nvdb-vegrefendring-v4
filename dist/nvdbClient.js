@@ -64,11 +64,20 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse, tids
         mode: 'cors',
         headers: NVDB_HEADERS
     });
-    if (!response.ok) {
+    // Handle response
+    if (response.ok) {
+        return await response.json();
+    }
+    // Handle 404 Not Found
+    if (response.status == 404) {
+        console.log("Vegsystemreferanse not found:", response.status, response.statusText);
+        return {};
+    }
+    else {
+        // Handle other errors
         console.log("Response not ok:", response.status, response.statusText);
         throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
-    return await response.json();
 };
 export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, tidspunkt) => {
     const url = baseUrl + "/veg";
@@ -82,11 +91,18 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
         mode: 'cors',
         headers: NVDB_HEADERS
     });
+    if (response.ok) {
+        return await response.json();
+    }
+    // Handle 404 Not Found
+    if (response.status == 404) {
+        console.log("Vegsystemreferanse not found:", response.status, response.statusText);
+        return {};
+    }
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
         throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
     }
-    return await response.json();
 };
 export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     const url = baseUrl + "/posisjon";

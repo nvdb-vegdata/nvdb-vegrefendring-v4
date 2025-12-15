@@ -89,11 +89,21 @@ export const fetchPosisjonByVegsystemreferanse = async (vegsystemreferanse: Stri
         headers: NVDB_HEADERS
     });
 
-    if (!response.ok) {
+
+    // Handle response
+    if (response.ok) {
+        return await response.json() as Posisjon;
+    }
+
+    // Handle 404 Not Found
+    if (response.status == 404) {
+        console.log("Vegsystemreferanse not found:", response.status, response.statusText);
+        return {} as Posisjon;
+    } else {
+        // Handle other errors
         console.log("Response not ok:", response.status, response.statusText);
         throw new Error(`Failed to fetch vegsystemreferanse: ${response.status} ${response.statusText}`);
     }
-    return await response.json() as Posisjon;
 };
 
 
@@ -114,11 +124,20 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid: number, pos
         headers: NVDB_HEADERS
     });
 
+    if (response.ok) {
+        return await response.json() as Posisjon;
+    }
+
+    // Handle 404 Not Found
+    if (response.status == 404) {
+        console.log("Vegsystemreferanse not found:", response.status, response.statusText);
+        return {} as Posisjon;
+    }
     if (!response.ok) {
         console.log("Response not ok:", response.status, response.statusText);
         throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
     }
-    return await response.json() as Posisjon;
+
 };
 
 export const fetchPositionByNordOst = async (nord: number, ost: number, tidspunkt?: Date) : Promise<Posisjon[]> => {

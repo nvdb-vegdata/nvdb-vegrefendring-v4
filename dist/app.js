@@ -316,6 +316,7 @@ async function displayResults(result) {
             var latlng = { lat: 0, lng: 0 };
             if (feature.koordinat === 'undefined' || !feature.koordinat) {
                 latlng = { lat: 0, lng: 0 };
+                feature.koordinat = "Ukjent koordinat";
             }
             else {
                 const geom = Terraformer.WKT.parse(feature.koordinat);
