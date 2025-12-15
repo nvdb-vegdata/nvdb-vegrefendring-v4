@@ -1,16 +1,15 @@
 # vegrefendring
 Viser tidsutvikling av en vegreferanse-verdi i tid og rom. 
 
-## Kjøre lokalt
-Kompilere med: ```npx tsc``` og åpne index.html i nettleser.
+## Kjøre og utvikle lokalt:
+```npn run dev``` og klikk på lenken som vises i terminalen som sier nvdb-vegrefendring-v4.
 
-## Utvikle lokalt
-Kompilere med:  ```npx tsc --watch``` og åpne filen index.html i nettleser.
 
 ## Deploye til github pages
-Kompiler opp med:   ```npx tsc```.
-Sjekk inn endrede filer i src/ og dist/ i git, og pushe til github.   
-Om du har endret index.html og styles.css, må du også sjekke inn disse.   
+Kompiler opp med:   ```npm run build ```.
+Deploy til github pages  med:   ```npm run build ```.
+
+Deploy pusher til github pages til branchen "gh-pages".
 
 
 ## Publisert versjon
