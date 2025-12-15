@@ -99,10 +99,9 @@ export const fetchPositionByLenkeposisjon = async (veglenksekvensid, posisjon, t
         console.log("Vegsystemreferanse not found:", response.status, response.statusText);
         return {};
     }
-    if (!response.ok) {
-        console.log("Response not ok:", response.status, response.statusText);
-        throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
-    }
+    // Handle  other errors
+    console.log("Response not ok:", response.status, response.statusText);
+    throw new Error(`Failed to fetch position by lenkeposisjon: ${response.status} ${response.statusText}`);
 };
 export const fetchPositionByNordOst = async (nord, ost, tidspunkt) => {
     const url = baseUrl + "/posisjon";
