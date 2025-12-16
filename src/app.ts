@@ -2,7 +2,7 @@ import {Vegreferanse} from "./vegreferanse.js";
 import type {VegrefAndVegsystemreferanse} from "./nvdbTypes.js";
 import {VegrefController} from "./vegrefController.js";
 import {UtilClass} from "./utilClass.js";
-import * as  WKT  from 'terraformer-wkt-parser';
+import * as WKT from 'terraformer-wkt-parser';
 import * as L from 'leaflet';
 import proj4 from 'proj4';
 import 'terraformer-wkt-parser';
@@ -19,6 +19,31 @@ var vegrefController = new VegrefController();
 const map = L.map('map');
 (window as any).map = map;
 const markers: L.Marker[] = [];
+
+// Set the map container cursor to crosshair
+(document.getElementById('map') as HTMLElement).style.cursor = 'crosshair';
+
+map.on('click', function (e: L.LeafletMouseEvent) {
+    const latlng = e.latlng;
+    const utm33 = proj4(WGS84, UTM33, [latlng.lng, latlng.lat]);
+    const easting = utm33[0];
+    const northing = utm33[1];
+
+    if (easting && northing) {
+        showLoading();
+        vegrefController.findPosisjonerByCoordinates(northing, easting, undefined)
+            .then(result => {
+                displayResults(result);
+            })
+            .catch(error => {
+                if (error instanceof Error) {
+                    displayError('Feil ved søk på posisjon: ' + error.message);
+                } else {
+                    displayError('Feil ved søk på posisjon.');
+                }
+            });
+    }
+})
 
 // Event listeners for form submissions
 document.getElementById('vegrefForm')?.addEventListener('submit', handleVegrefSearch);
