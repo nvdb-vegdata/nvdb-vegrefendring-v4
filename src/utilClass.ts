@@ -1,6 +1,18 @@
 import type {HistoricVegobjekt, Posisjon, Vegsystemreferanse} from "./nvdbTypes.ts";
 import {Vegkategori, Vegstatus} from "./vegreferanse.js";
 
+// Enum for property IDs used in Vegobjekt
+enum Egenskap {
+    VEGKATEGORI = 4566,
+    VEGSTATUS = 4567,
+    VEGNUMMER = 4568,
+    PARSELL = 4569,
+    START_METER = 4571,
+    SLUTT_METER = 4572,
+    FYLKE = 4591,
+    KOMMUNE = 4592,
+}
+
 export class UtilClass {
 
     /**
@@ -12,14 +24,14 @@ export class UtilClass {
      * @returns A formatted vegreferanse string.
      */
     static toVegreferanse(vegobjekt: HistoricVegobjekt): String {
-        const vegkategori = vegobjekt.egenskaper.find(e => e.id === 4566);
-        const vegstatus = vegobjekt.egenskaper.find(e => e.id === 4567);
-        const vegnummer = vegobjekt.egenskaper.find(e => e.id === 4568);
-        const parsell = vegobjekt.egenskaper.find(e => e.id === 4569);
-        const fylke = vegobjekt.egenskaper.find(e => e.id === 4591);
-        const kommune = vegobjekt.egenskaper.find(e => e.id === 4592);
-        const meterStart = vegobjekt.egenskaper.find(e => e.id === 4571);
-        const meterEnd = vegobjekt.egenskaper.find(e => e.id === 4572);
+        const vegkategori = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGKATEGORI);
+        const vegstatus = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGSTATUS);
+        const vegnummer = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGNUMMER);
+        const parsell = vegobjekt.egenskaper.find(e => e.id === Egenskap.PARSELL);
+        const fylke = vegobjekt.egenskaper.find(e => e.id === Egenskap.FYLKE);
+        const kommune = vegobjekt.egenskaper.find(e => e.id === Egenskap.KOMMUNE);
+        const meterStart = vegobjekt.egenskaper.find(e => e.id === Egenskap.START_METER);
+        const meterEnd = vegobjekt.egenskaper.find(e => e.id === Egenskap.SLUTT_METER);
 
 
         return ""
@@ -42,12 +54,12 @@ export class UtilClass {
      * @returns A formatted vegreferanse string.
      */
     static toVegreferanseWithMeter(vegobjekt: HistoricVegobjekt, meter: number): String {
-        const vegkategori = vegobjekt.egenskaper.find(e => e.id === 4566);
-        const vegstatus = vegobjekt.egenskaper.find(e => e.id === 4567);
-        const vegnummer = vegobjekt.egenskaper.find(e => e.id === 4568);
-        const parsell = vegobjekt.egenskaper.find(e => e.id === 4569);
-        const fylke = vegobjekt.egenskaper.find(e => e.id === 4591);
-        const kommune = vegobjekt.egenskaper.find(e => e.id === 4592);
+        const vegkategori = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGKATEGORI);
+        const vegstatus = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGSTATUS);
+        const vegnummer = vegobjekt.egenskaper.find(e => e.id === Egenskap.VEGNUMMER);
+        const parsell = vegobjekt.egenskaper.find(e => e.id === Egenskap.PARSELL);
+        const fylke = vegobjekt.egenskaper.find(e => e.id === Egenskap.FYLKE);
+        const kommune = vegobjekt.egenskaper.find(e => e.id === Egenskap.KOMMUNE);
 
 
         return ""
@@ -72,8 +84,8 @@ export class UtilClass {
      */
     static finnRelativPosisjon(vegobjekt: HistoricVegobjekt, currentMeter: number, ignoreRetning: boolean) {
 
-        const fra = vegobjekt.egenskaper.find(e => e.id === 4571);
-        const til = vegobjekt.egenskaper.find(e => e.id === 4572);
+        const fra = vegobjekt.egenskaper.find(e => e.id === Egenskap.START_METER);
+        const til = vegobjekt.egenskaper.find(e => e.id === Egenskap.SLUTT_METER);
         const stedfesting = vegobjekt.lokasjon.stedfestinger[0];
 
         if (!stedfesting || !fra || !til) {
@@ -111,8 +123,8 @@ export class UtilClass {
      * @returns Den beregnede meterverdien.
      */
     static finnRelativMeter(vegobjekt: HistoricVegobjekt, relativePosition: number, ignorerRetning: boolean = false) {
-        const fra = vegobjekt.egenskaper.find(e => e.id === 4571);
-        const til = vegobjekt.egenskaper.find(e => e.id === 4572);
+        const fra = vegobjekt.egenskaper.find(e => e.id === Egenskap.START_METER);
+        const til = vegobjekt.egenskaper.find(e => e.id === Egenskap.SLUTT_METER);
         const stedfesting = vegobjekt.lokasjon.stedfestinger[0];
 
         if (!stedfesting || !fra || !til) {
