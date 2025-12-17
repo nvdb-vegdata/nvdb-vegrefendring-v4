@@ -15,6 +15,11 @@ const WGS84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 // Instantiate the controller
 var vegrefController = new VegrefController();
 
+
+// Global variable to store valid kommune numbers
+var gyldigeKommuner: number[] = [];
+
+
 // Initialize the map
 const map = L.map('map');
 (window as any).map = map;
@@ -152,6 +157,19 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     map.setView([60.472, 8.4689], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '© OpenStreetMap contributors'}).addTo(map);
+
+    // Fetch kommune numbers and log as a list
+    fetch('https://nvdbapiles.atlas.vegvesen.no/omrader/kommuner')
+        .then(response => response.json())
+        .then(data => {
+            // Assuming data is an array of objects with a "nummer" field
+            const nummerList = data.map((item: { nummer: number }) => item.nummer);
+            gyldigeKommuner = nummerList;
+            console.log('Kommune nummer list:', nummerList);
+        })
+        .catch(error => {
+            console.error('Error fetching kommuner:', error);
+        });
 });
 
 // Handler function for vegreferanse search form submission
@@ -236,6 +254,17 @@ async function handleVegsysrefSearch(event: Event) {
         ? new Date((document.getElementById('vegsysref_dato') as HTMLInputElement).value)
         : undefined;
 
+
+    if (fylke || kommune) {
+        let kommuneExists = false;
+
+        if (fylke && kommune) kommuneExists = gyldigeKommuner.includes(fylke * 100 + kommune);
+
+        if (!kommuneExists) {
+            displayError('Ugyldig kommune / fylke kombinasjon.  Husk å fylle ut både kommune og fylke.');
+            return;
+        }
+    }
 
     try {
         showLoading();
