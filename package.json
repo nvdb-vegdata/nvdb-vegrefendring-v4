@@ -12,6 +12,7 @@
   "dependencies": {
     "leaflet": "^1.5.1",
     "proj4": "^2.20.2",
+    "proj4leaflet": "^1.0.2",
     "terraformer": "^1.0.12",
     "terraformer-wkt-parser": "^1.2.1"
   },
