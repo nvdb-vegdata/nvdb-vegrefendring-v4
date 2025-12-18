@@ -369,7 +369,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
     clearMarkers();
 
     if (result.length == 0) {
-        if (resultsDiv) resultsDiv.innerHTML = '<p>Ingen resultater funnet.</p>';
+        if (resultsDiv) resultsDiv.innerHTML = '<p>Ingen historiske vegreferanser funnet.</p>';
     } else {
         let html = '<h3>Resultater:</h3>' +
             '<table class="results-table" border="1">' +
