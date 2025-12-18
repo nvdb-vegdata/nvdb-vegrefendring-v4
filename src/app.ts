@@ -74,11 +74,21 @@ document.getElementById("vis532_switch")?.addEventListener('change', function (t
 });
 
 // Event listeners for form resets
-['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
-    document.getElementById(formId)?.addEventListener('reset', function (e) {
-        e.preventDefault();
-        this.querySelectorAll('input').forEach(input => input.value = '');
-        this.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+document.addEventListener('DOMContentLoaded', function () {
+    ['vegrefForm', 'posForm', 'lenkeForm', 'vegsysrefForm'].forEach(formId => {
+        document.getElementById(formId)?.addEventListener('reset', function (e) {
+            e.preventDefault();
+            this.querySelectorAll('input').forEach(input => input.value = '');
+            this.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+
+            if (formId === 'vegsysrefForm') {
+                const extraType = document.getElementById('extraType') as HTMLSelectElement;
+                if (extraType) {
+                    extraType.value = '';
+                    extraType.dispatchEvent(new Event('change'));
+                }
+            }
+        });
     });
 });
 
