@@ -70,19 +70,22 @@ const crs = new (window as any).L.Proj.CRS('EPSG:25833', '+proj=utm +zone=33 +el
     });
 
 // Base maps for layer control
-var baseMaps = {
+const baseMaps = {
     "Trafikkportalen": kartLayer,
     "Flyfoto": flyfotoLayer,
 };
 
 // Create the map instance
-var map = L.map('map', {
+const map = L.map('map', {
     zoom: 6, center: [63.43, 10.40], crs: crs, worldCopyJump: false, zoomControl: false, attributionControl: true,
     layers: [kartLayer]
 });
+(window as any).leafletMap = map;
 
-// Add zoom control to the map
+// Add zoom control to the map and scale
 L.control.layers(baseMaps).addTo(map);
+L.control.zoom({position:'topleft'}).addTo(map);
+L.control.scale({ metric: true, imperial: false }).addTo(map);
 
 const markers: L.Marker[] = [];
 
@@ -500,7 +503,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 html += `<tr class="${rowClass}">
             <td>
                 ${latlng.lat !== 0
-                    ? `<a href="#" class="set-view-link" data-lat="${latlng.lat}" data-lng="${latlng.lng}">${feature.beregnetVegreferanse}</a>`
+                    ? `<a href="#" onclick="window.leafletMap.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a>`
                     : `${feature.beregnetVegreferanse}`}
             </td>
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
