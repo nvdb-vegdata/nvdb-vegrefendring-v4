@@ -11,14 +11,22 @@ import 'terraformer-wkt-parser';
 const UTM33 = '+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs';
 const WGS84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
-
 // Instantiate the controller
 var vegrefController = new VegrefController();
 
+// Kommune class to hold kommune data
+class Kommune {
+    id: number;
+    label: string;
+
+    constructor(id: number, label: string) {
+        this.id = id;
+        this.label = label;
+    }
+}
 
 // Global variable to store valid kommune numbers
-var gyldigeKommuner: number[] = [];
-
+var gyldigeKommuner: Kommune[] = [];
 
 // Initialize the map
 const map = L.map('map');
@@ -162,10 +170,24 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('https://nvdbapiles.atlas.vegvesen.no/omrader/kommuner')
         .then(response => response.json())
         .then(data => {
-            // Assuming data is an array of objects with a "nummer" field
-            const nummerList = data.map((item: { nummer: number }) => item.nummer);
-            gyldigeKommuner = nummerList;
-            console.log('Kommune nummer list:', nummerList);
+            // Empty existing options
+            const datalist = document.getElementById('vegsysref_kommuner');
+            if (datalist) {
+                datalist.innerHTML = '';
+            }
+            // Map data to Kommune objects and create options
+            const kommuner: Kommune[] = data.map((k: any) => new Kommune(parseInt(k.nummer), `${k.nummer} - ${k.navn}`));
+            kommuner.forEach(k => {
+                const option = document.createElement('option');
+                option.value = k.id.toString();
+                option.textContent = k.label;
+                if (datalist) {
+                    datalist.appendChild(option);
+                }
+            });
+
+            gyldigeKommuner = kommuner;
+            console.log('Kommune nummer list:', kommuner);
         })
         .catch(error => {
             console.error('Error fetching kommuner:', error);
@@ -242,7 +264,6 @@ async function handleLenkesekvensSearch(event: Event) {
 async function handleVegsysrefSearch(event: Event) {
     event.preventDefault();
 
-    const fylke = parseInt((document.getElementById('vegsysref_fylke') as HTMLInputElement)?.value) || undefined;
     const kommune = parseInt((document.getElementById('vegsysref_kommune') as HTMLInputElement)?.value) || undefined;
     const kat = (document.getElementById('vegsysref_kat') as HTMLInputElement)?.value || 'E';
     const stat = (document.getElementById('vegsysref_fase') as HTMLInputElement)?.value || 'V';
@@ -254,23 +275,15 @@ async function handleVegsysrefSearch(event: Event) {
         ? new Date((document.getElementById('vegsysref_dato') as HTMLInputElement).value)
         : undefined;
 
-
-    if (fylke || kommune) {
-        let kommuneExists = false;
-
-        if (fylke && kommune) kommuneExists = gyldigeKommuner.includes(fylke * 100 + kommune);
-
-        if (!kommuneExists) {
-            displayError('Ugyldig kommune / fylke kombinasjon.  Husk å fylle ut både kommune og fylke.');
-            return;
-        }
+    if (kommune && !gyldigeKommuner.some(k => k.id === kommune)) {
+        displayError('Ugyldig kommune.  Velg en fra listen.');
+        return;
     }
 
     try {
         showLoading();
         var vegsystemreferanse = ""
-            + (fylke ? UtilClass.padNumber(fylke, 2) : "")
-            + (kommune ? UtilClass.padNumber(kommune, 2) : "")
+            + (kommune ? UtilClass.padNumber(kommune, 4) : "")
             + kat
             + stat
             + vegnr

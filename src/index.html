@@ -124,13 +124,10 @@
                         <form id="vegsysrefForm" class="search-form">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="vegsysref_fylke">Fylke</label>
-                                    <input type="number" id="vegsysref_fylke" name="fylke" min="1" max="99">
-                                </div>
-                                <div class="form-group">
                                     <label for="vegsysref_kommune">Kommune</label>
-                                    <input type="text" id="vegsysref_kommune" name="kommune" placeholder="00"
-                                           maxlength="2">
+                                    <input list="vegsysref_kommuner"  id="vegsysref_kommune" name="kommune">
+                                    <datalist id="vegsysref_kommuner">
+                                    </datalist>
                                 </div>
                                 <div class="form-group">
                                     <label for="vegsysref_kat">Kategori *</label>
