@@ -6,6 +6,7 @@ import * as WKT from 'terraformer-wkt-parser';
 import * as L from 'leaflet';
 import proj4 from 'proj4';
 import 'terraformer-wkt-parser';
+import 'proj4leaflet';
 
 // Define UTM33 and WGS84 projections
 const UTM33 = '+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs';
@@ -29,8 +30,63 @@ class Kommune {
 var gyldigeKommuner: Kommune[] = [];
 
 // Initialize the map
-const map = L.map('map');
-(window as any).map = map;
+const geodataKart = 'https://nvdbcache.geodataonline.no/arcgis/rest/services/Trafikkportalen/GeocacheTrafikkJPG/MapServer/tile/{z}/{y}/{x}'
+const geodataFlyfoto = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheBilder/MapServer/tile/{z}/{y}/{x}'
+
+const kartLayer = L.tileLayer(geodataKart, {
+    maxZoom: 16, minZoom: 0, subdomains: '123456789', detectRetina: false,
+    attribution: '&copy; NVDB, Geovekst, kommmuene. Kartbakgrunn utenfor Norge: Open street map contributors'
+});
+
+// Flyfoto layer
+const flyfotoLayer = L.tileLayer(geodataFlyfoto, {
+    maxZoom: 16, minZoom: 0, subdomains: '123456789', detectRetina: false,
+    attribution: 'Test'
+});
+
+// Define custom CRS for UTM33
+const crs = new (window as any).L.Proj.CRS('EPSG:25833', '+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs ',
+    {
+        origin: [-2500000.0, 9045984.0],
+        resolutions: [
+            21674.7100160867,
+            10837.35500804335,
+            5418.677504021675,
+            2709.3387520108377,
+            1354.6693760054188,
+            677.3346880027094,
+            338.6673440013547,
+            169.33367200067735,
+            84.66683600033868,
+            42.33341800016934,
+            21.16670900008467,
+            10.583354500042335,
+            5.291677250021167,
+            2.6458386250105836,
+            1.3229193125052918,
+            0.6614596562526459,
+            0.33072982812632296
+        ]
+    });
+
+// Base maps for layer control
+const baseMaps = {
+    "Trafikkportalen": kartLayer,
+    "Flyfoto": flyfotoLayer,
+};
+
+// Create the map instance
+const map = L.map('map', {
+    zoom: 6, center: [63.43, 10.40], crs: crs, worldCopyJump: false, zoomControl: false, attributionControl: true,
+    layers: [kartLayer]
+});
+(window as any).leafletMap = map;
+
+// Add zoom control to the map and scale
+L.control.layers(baseMaps).addTo(map);
+L.control.zoom({position:'topleft'}).addTo(map);
+L.control.scale({ metric: true, imperial: false }).addTo(map);
+
 const markers: L.Marker[] = [];
 
 // Set the map container cursor to crosshair
@@ -173,8 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Initialize the map view and tile layer
 document.addEventListener('DOMContentLoaded', function () {
-    map.setView([60.472, 8.4689], 5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '© OpenStreetMap contributors'}).addTo(map);
 
     // Fetch kommune numbers and log as a list
     fetch('https://nvdbapiles.atlas.vegvesen.no/omrader/kommuner')
@@ -449,7 +503,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 html += `<tr class="${rowClass}">
             <td>
                 ${latlng.lat !== 0
-                    ? `<a href="#" onclick="map.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a>`
+                    ? `<a href="#" onclick="window.leafletMap.setView([${latlng.lat}, ${latlng.lng}], 16); return false;">${feature.beregnetVegreferanse}</a>`
                     : `${feature.beregnetVegreferanse}`}
             </td>
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
