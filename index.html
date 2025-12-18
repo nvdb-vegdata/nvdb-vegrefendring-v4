@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
           crossorigin=""/>
-  <script type="module" crossorigin src="/nvdb-vegrefendring-v4/assets/index-B8HuadYJ.js"></script>
+  <script type="module" crossorigin src="/nvdb-vegrefendring-v4/assets/index-B1sqlbKJ.js"></script>
   <link rel="stylesheet" crossorigin href="/nvdb-vegrefendring-v4/assets/index-Ch50mzao.css">
 </head>
 
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="vegref_stat">Status</label>
+                                    <label for="vegref_stat">Status *</label>
                                     <select id="vegref_stat" name="stat">
                                         <option value="V" selected>V - Eksisterende vei</option>
                                         <option value="A">A - Arm</option>
@@ -94,16 +94,17 @@
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="vegref_hp">Hovedparsell</label>
+                                    <label for="vegref_hp">Hovedparsell *</label>
                                     <input type="number" id="vegref_hp" name="hp" value="1" min="1" max="999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vegref_meter">Meter</label>
+                                    <label for="vegref_meter">Meter *</label>
                                     <input type="number" id="vegref_meter" name="meter" value="0" min="0" max="99999">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="vegref_dato">Dato (Vegreferanse fram til 31-10-2022)</label>
+                                <label for="vegref_dato" title="Setter du dato så hentes treff som var gyldige på denne datoen.">
+                                    Avgrens på dato (Vegreferanse fram til 31-10-2022)&nbsp;&#9432;</label>
                                 <input type="date" id="vegref_dato" name="dato" max="2022-10-31">
                             </div>
                             <div style="margin:25px 5px 1px 5px;">
@@ -112,10 +113,10 @@
                                            value="off">
                                 </label>
                                 <span title="Videresøke på stedfestingen til de historiske vegobjektene søket fant og hent ut alle historiske vegobekt som har vært stedfestet på disse lenkeposisjonene."
-                                >Videresøk på stedfestingen til historisk vegobjekt</span>
+                                >Videresøk på stedfestingen til historisk vegobjekt</span>&nbsp;&#9432;
                             </div>
                             <div class="form-row">
-                                <button type="submit" class="btn-primary">Søk vegreferanse</button>
+                                <button type="submit" class="btn-primary">Søk</button>
                                 <button type="reset" class="btn-secondary">Nullstill skjema</button>
                             </div>
                         </form>
@@ -144,7 +145,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="vegsysref_fase">Fase</label>
+                                    <label for="vegsysref_fase">Fase *</label>
                                     <select id="vegsysref_fase" name="fase">
                                         <option value="P">P - Planlagt veg</option>
                                         <option value="A">A - Under bygging</option>
@@ -159,16 +160,16 @@
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="vegsysref_strekning">Strekning</label>
+                                    <label for="vegsysref_strekning">Strekning *</label>
                                     <input type="number" id="vegsysref_strekning" name="hp" value="1" min="1" max="999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vegsysref_delstrekning">Delstrekning</label>
+                                    <label for="vegsysref_delstrekning">Delstrekning *</label>
                                     <input type="number" id="vegsysref_delstrekning" name="hp" value="1" min="1"
                                            max="999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vegsysref_meter">Meter</label>
+                                    <label for="vegsysref_meter">Meter *</label>
                                     <input type="number" id="vegsysref_meter" name="meter" value="0" min="0"
                                            max="99999">
                                 </div>
@@ -184,30 +185,31 @@
                                     </select>
                                 </div>
                                 <div class="form-group" id="sideanleggsdel-group" style="display:none;">
-                                    <label for="sideanleggsdel">Sideanleggsdel</label>
+                                    <label for="sideanleggsdel">Sideanleggsdel *</label>
                                     <input type="number" id="sideanleggsdel" name="sideanleggsdel"
                                            placeholder="Sideanleggsdel" min="1">
-                                    <label for="sideanleggsdel">Sideanlegg meter</label>
+                                    <label for="sideanleggsdel">Sideanlegg meter *</label>
                                     <input type="number" id="sideanleggsdel_meter" name="sideanleggsdel_meter"
                                            placeholder="Sideanleggsdel meter">
                                 </div>
                                 <div class="form-group" id="kryssdel-group" style="display:none;">
-                                    <label for="kryssdel">Kryssdel</label>
+                                    <label for="kryssdel">Kryssdel *</label>
                                     <input type="number" id="kryssdel" name="kryssdel" placeholder="Kryssdel" min="1">
-                                    <label for="kryssdel">Kryssdel meter</label>
+                                    <label for="kryssdel">Kryssdel meter *</label>
                                     <input type="number" id="kryssdel_meter" name="kryssdel_meter"
                                            placeholder="Kryssdel meter">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="vegsysref_dato">Dato (Vegsystemreferanse startet i november
-                                        2019)</label>
+                                    <label for="vegsysref_dato" title="Setter du dato så hentes treff som var gyldige på denne datoen.">
+                                        Avgrens på dato (Vegsystemreferanse startet i november
+                                        2019)>&nbsp;&#9432;</label>
                                     <input type="date" id="vegsysref_dato" name="dato">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button type="submit" class="btn-primary">Søk vegsystemreferanse</button>
+                                <button type="submit" class="btn-primary">Søk</button>
                                 <button type="reset" class="btn-secondary">Nullstill skjema</button>
                             </div>
                         </form>
@@ -232,11 +234,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="posForm_dato">Dato</label>
+                                    <label for="posForm_dato" title="Setter du dato så hentes treff som var gyldige på denne datoen.">
+                                        Avgrens på dato&nbsp;&#9432;</label>
                                     <input type="date" id="posForm_dato" name="dato">
                                 </div>
                             </div>
-                            <button type="submit" class="btn-primary">Søk på koordinater</button>
+                            <button type="submit" class="btn-primary">Søk</button>
                             <button type="reset" class="btn-secondary">Nullstill skjema</button>
                         </form>
                     </section>
@@ -259,11 +262,12 @@
                                            placeholder="f.eks. 123456">
                                 </div>
                                 <div class="form-group">
-                                    <label for="lenkeForm_dato">Dato</label>
+                                    <label for="lenkeForm_dato" title="Setter du dato så hentes treff som var gyldige på denne datoen.">
+                                        Avgrens på Dato&nbsp;&#9432;</label>
                                     <input type="date" id="lenkeForm_dato" name="dato">
                                 </div>
                             </div>
-                            <button type="submit" class="btn-primary">Søk på lenkesekvensId og posisjon</button>
+                            <button type="submit" class="btn-primary">Søk</button>
                             <button type="reset" class="btn-secondary">Nullstill skjema</button>
                         </form>
                     </section>
