@@ -22,10 +22,15 @@ eller
 ```npm run build ```    
 ```npm run deploy ```
 
-
 Deploy pusher til github pages til branchen "gh-pages".
 
 
-## Publisert versjon
+### Brukerdokumentasjon
+Brukerdokumentasjon ligger i katalogen src/doc.
+Ved deploy så følger det automatisk med i github pages.
+
+
+
+## Publisert versjon ligger på Github pages:
 Vegrefendring nås på URL-en:  
 https://nvdb-vegdata.github.io/nvdb-vegrefendring-v4/

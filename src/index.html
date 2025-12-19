@@ -17,7 +17,8 @@
     <header>
         <h1>Vegreferanse Historikk</h1>
         <p>Søk etter historiske vegreferanser ved vegreferanse, vegsystemreferanse, lenkeposisjon og koordinater.
-            Du kan også klikke i kartet og få frem historiske vegreferanser.</p>
+            Du kan også klikke i kartet og få frem historiske vegreferanser.   </p>
+        <p>Brukerdokumentasjon er tilgjengelig i eget vindu <a href="docs/userdoc.html" target="_blank" rel="noopener noreferrer">her</a>.</p>
     </header>
 
     <main>
@@ -45,13 +46,11 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="vegref_fylke">Fylke *</label>
-                                    <input type="number" id="vegref_fylke" name="fylke" value="8" min="1" max="99"
-                                           required>
+                                    <input type="number" id="vegref_fylke" name="fylke" maxlength="2" value="8" min="1" max="99" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="vegref_kommune">Kommune</label>
-                                    <input type="text" id="vegref_kommune" name="kommune" placeholder="00"
-                                           maxlength="2">
+                                    <input type="number" id="vegref_kommune" name="kommune" placeholder="00" min="0" max="99">
                                 </div>
                                 <div class="form-group">
                                     <label for="vegref_kat">Kategori *</label>
@@ -112,7 +111,7 @@
                                            value="off">
                                 </label>
                                 <span title="Historiske vegreferanser som er stedfestet på samme sted, men som ikke tilfredstiller søkekriteriene."
-                                >Inkluder andre vegreferanser på samme lokasjon.</span>&nbsp;&#9432;
+                                >Inkluder andre vegreferanser på samme lokasjon. &nbsp;&#9432;</span>
                             </div>
                             <div class="form-row">
                                 <button type="submit" class="btn-primary">Søk</button>
