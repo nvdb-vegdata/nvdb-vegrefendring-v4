@@ -33,8 +33,6 @@ var gyldigeKommuner: Kommune[] = [];
 const geodataKart = 'https://nvdbcache.geodataonline.no/arcgis/rest/services/Trafikkportalen/GeocacheTrafikkJPG/MapServer/tile/{z}/{y}/{x}'
 const geodataFlyfoto = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheBilder/MapServer/tile/{z}/{y}/{x}'
 
-const DEFAULT_ZOOM = 14;
-
 const kartLayer = L.tileLayer(geodataKart, {
     maxZoom: 16, minZoom: 0, subdomains: '123456789', detectRetina: false,
     attribution: '&copy; NVDB, Geovekst, kommmuene. Kartbakgrunn utenfor Norge: Open street map contributors'
@@ -499,7 +497,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                             markers.push(marker);
 
                             // Center map on the first result
-                            map.setView([latlng.lat, latlng.lng], DEFAULT_ZOOM);
+                            map.setView([latlng.lat, latlng.lng], 14);
                         }
                     }
                 }
@@ -508,7 +506,7 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 html += `<tr class="${rowClass}">
             <td>
                 ${latlng.lat !== 0
-                    ? `<a href="#" onclick="window.leafletMap.setView([${latlng.lat}, ${latlng.lng}], DEFAULT_ZOOM); return false;">${feature.beregnetVegreferanse}</a>`
+                    ? `<a href="#" onclick="window.leafletMap.setView([${latlng.lat}, ${latlng.lng}], 14); return false;">${feature.beregnetVegreferanse}</a>`
                     : `${feature.beregnetVegreferanse}`}
             </td>
             <td class="historic_532" style="display:none">${feature.vegreferanse}</td>
