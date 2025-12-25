@@ -10,7 +10,7 @@
 <header>
     <h1>Brukerdokumentasjon for historiske vegreferanser</h1>
     <p>
-        Denne siden beskriver hvordan du bruker løsningen for søk på historiske vegreferanser slik den vises i <code>index.html</code>.
+        Denne siden beskriver hvordan du bruker løsningen for søk på historiske vegreferanser.
         Dokumentasjonen er ment for saksbehandlere og andre som har behov for å slå opp posisjoner og metadata basert på
         vegreferanse.
     </p>
@@ -140,10 +140,6 @@
         <li>vise historiske vegreferanser for denne posisjonen, inkludert tilhørende koordinater</li>
         <li>vise dagens vegsystemreferanse for samme posisjon, dersom tilgjengelig</li>
     </ul>
-    <p>
-        Hvordan resultatet vises (popup i kartet, tabell ved siden av kartet osv.) avhenger av implementasjonen i
-        <code>index.html</code>.
-    </p>
 </section>
 
 <section id="avanserte-funksjoner">
@@ -184,12 +180,24 @@
         <li>Kun vegreferanser innenfor gyldig datasett støttes.</li>
         <li>Nøyaktighet i posisjon avhenger av grunnlagsdata (NVDB eller tilsvarende kilde).</li>
         <li>Endringer i vegnettet kan medføre at eldre referanser ikke lenger gir treff.</li>
+        <li>
+            Datoen <code>1950-01-01</code> brukes som en fiktiv startdato der det mangler mer presis informasjon om
+            når en veg ble opprettet. Dette er en konvensjon fra eldre registreringer, og det kan vurderes å markere
+            denne datoen tydeligere i applikasjonen, slik at brukere forstår at den ikke nødvendigvis er korrekt.
+        </li>
+        <li>
+            Når det gjelder gamle veger, kan informasjonen variere. Noen veger har navn og historiske opplysninger,
+            mens andre har begrenset data. Veger som «Vestlandske hovedvei» og «Terland klopp» kan ha vært både
+            offentlige og private tidligere, men detaljene er ofte mangelfulle. For mer inngående informasjon om
+            historiske vegeiere anbefales Kartverkets historiske kart:
+            <a href="https://histkart.kartverket.no/" target="_blank" rel="noopener noreferrer">https://histkart.kartverket.no/</a>
+        </li>
     </ul>
 </section>
 
 <footer>
     <p>
-        Sist oppdatert: 2025-12-19.
+        Sist oppdatert: 2025-12-25.
     </p>
 </footer>
 </body>
