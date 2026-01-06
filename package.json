@@ -22,6 +22,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "if [ -d node_modules/nvdb-vegref-api ]; then (cd node_modules/nvdb-vegref-api && npm run build); fi",
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
