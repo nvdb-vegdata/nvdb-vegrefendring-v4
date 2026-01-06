@@ -21,6 +21,7 @@
     "typescript": "^5"
   },
   "scripts": {
+    "predev": "if [ -d node_modules/nvdb-vegref-api ]; then (cd node_modules/nvdb-vegref-api && npm run build); fi",
     "dev": "vite",
     "prebuild": "if [ -d node_modules/nvdb-vegref-api ]; then (cd node_modules/nvdb-vegref-api && npm run build); fi",
     "build": "vite build",
