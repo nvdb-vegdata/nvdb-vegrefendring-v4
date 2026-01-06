@@ -32,11 +32,17 @@ kbd {
     background: #f4f8fc;
 }
 
+
 .warning {
     border-left: 4px solid #d4351c;
     padding: 0.75rem 1rem;
     margin: 1rem 0;
     background: #fdf3f2;
+}
+
+.myurl {
+    padding: 0.25rem 1rem;
+    background: #f4f8fc;
 }
 
 ul {
@@ -56,4 +62,22 @@ footer {
 
 a {
     color: #0053a6;
+}
+
+body {
+    counter-reset: section;
+}
+
+h2::before {
+    counter-increment: section;
+    content: counter(section) ". ";
+}
+
+h3 {
+    counter-increment: subsection;
+}
+h3::before {
+    content: counter(section) "." counter(subsection) " ";
+    margin-right: 0.3em;
+    font-weight: 400;
 }
