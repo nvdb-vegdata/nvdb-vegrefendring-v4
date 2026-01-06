@@ -1,7 +1,7 @@
-import {Vegreferanse} from "./vegreferanse.js";
-import type {VegrefAndVegsystemreferanse} from "./nvdbTypes.js";
-import {VegrefController} from "./vegrefController.js";
-import {UtilClass} from "./utilClass.js";
+import {Vegreferanse} from "nvdb-vegref-api/vegreferanse";
+import type {VegrefAndVegsystemreferanse} from "nvdb-vegref-api/nvdbTypes";
+import {VegrefController} from "nvdb-vegref-api/vegrefController";
+import {UtilClass} from "nvdb-vegref-api/utilClass";
 import * as WKT from 'terraformer-wkt-parser';
 import * as L from 'leaflet';
 import proj4 from 'proj4';

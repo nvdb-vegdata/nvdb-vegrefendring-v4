@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "leaflet": "^1.5.1",
+    "nvdb-vegref-api": "github:nvdb-vegdata/nvdb-vegref-api",
     "proj4": "^2.20.2",
     "proj4leaflet": "^1.0.2",
     "terraformer": "^1.0.12",
