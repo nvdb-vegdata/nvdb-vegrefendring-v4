@@ -41,7 +41,7 @@ const kartLayer = L.tileLayer(geodataKart, {
 // Flyfoto layer
 const flyfotoLayer = L.tileLayer(geodataFlyfoto, {
     maxZoom: 16, minZoom: 0, subdomains: '123456789', detectRetina: false,
-    attribution: 'Test'
+    attribution: '&copy; Kartverket, Geovekst, kommuner og Avinor - Geodata AS.'
 });
 
 // Define custom CRS for UTM33
@@ -71,7 +71,7 @@ const crs = new (window as any).L.Proj.CRS('EPSG:25833', '+proj=utm +zone=33 +el
 
 // Base maps for layer control
 const baseMaps = {
-    "Trafikkportalen": kartLayer,
+    "Standard": kartLayer,
     "Flyfoto": flyfotoLayer,
 };
 
