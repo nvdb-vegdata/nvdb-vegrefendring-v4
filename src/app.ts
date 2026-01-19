@@ -464,6 +464,13 @@ async function displayResults(result: VegrefAndVegsystemreferanse[]) {
                 const dateB = new Date(b.fraDato).getTime();
                 return dateA - dateB;
             })
+            // Filter out features with duplicate vegreferanse and veglenkeposisjon
+            .filter((feature, index, self) =>
+                self.findIndex(f =>
+                    f.vegreferanse === feature.vegreferanse &&
+                    f.veglenkeposisjon === feature.veglenkeposisjon
+                ) === index
+            )
             .forEach(feature => {
                 if (feature.veglenkeid !== lastVeglenkeid) {
                     lastVeglenkeid = feature.veglenkeid;
