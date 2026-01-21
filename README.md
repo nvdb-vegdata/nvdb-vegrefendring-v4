@@ -32,5 +32,9 @@ Ved deploy så følger det automatisk med i github pages.
 
 
 ## Publisert versjon ligger på Github pages:
-Vegrefendring nås på URL-en:  
-https://nvdb-vegdata.github.io/nvdb-vegrefendring-v4/
+~~Vegrefendring nås på URL-en:~~  
+~~https://nvdb-vegdata.github.io/nvdb-vegrefendring-v4/~~
+
+
+Vegrefendring nås på URL-en:
+https://historiske-vegreferanser.atlas.vegvesen.no/
